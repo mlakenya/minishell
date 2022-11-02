@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+  
+    {
+      "name": "Launch",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/minishell",
+      "args": [""],
+    },
+    {
+      "name": "(lldb) Подключить",
+      "type": "cppdbg",
+      "request": "attach",
+      "program": "${workspaceFolder}/minishell",
+      "processId": "${command:pickProcess}",
+      "MIMode": "lldb"
+    }
+    ]
+  }
