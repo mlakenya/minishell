@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/28 17:39:24 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/04 20:23:00 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 	t_mini	m;
 
 	init_mini(&m);
-	signal(SIGINT, &sigint);
-	signal(SIGQUIT, &sigquit);
+	// signal(SIGINT, &sigint);
+	// signal(SIGQUIT, &sigquit);
 	get_command(&m);
 }
