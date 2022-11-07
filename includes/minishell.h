@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/02 05:20:56 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:22:39 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,14 @@ void	sigquit(int code);
 * parsing
 */
 void	get_command(t_mini *mini);
+int		is_determinator(char *s, int i);
+void	skip_spaces(char *str, int *i);
+
+/*
+* variables
+*/
+int			is_variable(char *s, t_mini *ms);
+int			replace_variables(char **s, t_mini *m, int i, int single_brac);
+t_variable	*init_var(void);
 
 #endif

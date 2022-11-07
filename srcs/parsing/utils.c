@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/07 23:50:24 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/07 23:17:47 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/07 23:50:07 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigint(int code)
+int	is_determinator(char *s, int i)
 {
-	(void)code;
-	write(1, "\nsigint\n", 8);
+	if (s[i] == ' ')
+		return (1);
+	if (s[i] == '>')
+		return (1);
+	if (s[i] == '<')
+		return (1);
+	if (s[i] == '$')
+		return (1);
+	if (s[i] == '|')
+		return (1);
+	return (0);
 }
 
-void	sigquit(int code)
+void	skip_spaces(char *str, int *i)
 {
-	(void)code;
-	write(1, "\nsigquit\n", 9);
+	while ((str[*i] == ' ' || str[*i] == '\t')
+		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+		(*i)++;
 }

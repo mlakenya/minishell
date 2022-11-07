@@ -6,7 +6,7 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 15:36:00 by mlakenya          #+#    #+#              #
-#    Updated: 2022/10/28 16:10:44 by mlakenya         ###   ########.fr        #
+#    Updated: 2022/11/07 23:34:22 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,17 @@ NAME	= minishell
 
 HEDEAR	= includes/minishell.h
 
-PARSING	= parsing
+PARSING	= parsing utils
 
-GNL		= get_next_line
+VARS	= variables variables2
 
 SIGNAL	= signal
 
 MAIN	= main
 
 SRCS	= $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
-		  $(addsuffix .c, $(addprefix srcs/gnl/, $(GNL))) \
 		  $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
+		  $(addsuffix .c, $(addprefix srcs/parsing/, $(VARS))) \
 		  $(addsuffix .c, $(addprefix srcs/, $(SIGNAL)))
 
 OBJ		= $(SRCS:%.c=%.o)
@@ -54,5 +54,9 @@ fclean: clean
 	@rm -f $(NAME)
 	
 re: fclean all
+
+test: re 
+	@make clean	
+	@clear
 
 .PHONY : all clean fclean re
