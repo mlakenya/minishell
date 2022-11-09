@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:49:54 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/07 23:47:12 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:21:13 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,49 @@ char	*change_substr(char *src, char *rep, int st, int end)
 	return (new);
 }
 
-int	replace_variables(char **s, t_mini *m, int i, int single_brac)
+int	replace(char **s, int *start, t_mini *mini)
 {
-	int		j;
 	char	*replace;
 	char	*new;
+	int		j;
 
+	j = *start;
+	(*start)++;
+	while ((*s)[*start] && !is_determinator(*s, *start))
+		(*start)++;
+	replace = find_variable(*s + j + 1, mini, *start - j - 1);
+	if (!replace)
+		return (0);
+	new = change_substr(*s, replace, j, *start);
+	*start = j + ft_strlen(replace);
+	free(replace);
+	if (!new)
+		return (0);
+	free(*s);
+	*s = new;
+	return (1);
+}
+
+int	replace_variables(char **s, t_mini *m)
+{
+	int	i;
+	int	single_brac;
+
+	i = 0;
+	single_brac = 0;
 	while ((*s)[i])
 	{
 		if ((*s)[i] == '\'')
 			single_brac = !single_brac;
 		if ((*s)[i] == '$' && !single_brac)
 		{
-			j = i;
-			i++;
-			while ((*s)[i] && !is_determinator(*s, i))
-				i++;
-			replace = find_variable(*s + j + 1, m, i - j - 1);
-			if (!replace)
+			if (!replace(s, &i, m))
 				return (0);
-			new = change_substr(*s, replace, j, i);
-			i = j + ft_strlen(replace);
-			free(replace);
-			if (!new)
-				return (0);
-			free(*s);
-			*s = new;
 		}
-		i++;
+		else
+		{
+			i++;
+		}
 	}
 	return (1);
 }

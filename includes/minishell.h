@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/07 23:22:39 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:19:12 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	skip_spaces(char *str, int *i);
 * variables
 */
 int			is_variable(char *s, t_mini *ms);
-int			replace_variables(char **s, t_mini *m, int i, int single_brac);
+int			replace_variables(char **s, t_mini *m);
 t_variable	*init_var(void);
 
 #endif

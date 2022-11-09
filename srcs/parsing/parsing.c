@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/07 23:50:36 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:44:43 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,51 +62,48 @@ void	arg_type(t_token	*token)
 		token->type = ARG;
 }
 
-t_token	*get_next_token(char *s)
+t_token	*get_next_token(char *s,int *i)
 {
 	t_token	*new_token;
-	int		i;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	i = 0;
-	while (s[i])
+	while (s[*i])
 	{
-		if (i > 0 && is_determinator(s, i) && s[i - 1] != s[i])
+		if (*i > 0 && is_determinator(s, *i) && s[*i - 1] != s[*i])
 			break ;
-		i++;
+		(*i)++;
 	}
-	new_token->val = (char *)malloc(i);
+	new_token->val = (char *)malloc(*i + 1);
 	if (new_token->val == NULL)
 		return (NULL);
-	ft_strlcpy(new_token->val, s, i);
+	ft_strlcpy(new_token->val, s, *i + 1);
 	return (new_token);
 }
 
-t_token	*parse_str(char *s, t_mini *m)
+t_token	*parse_str(char **s, t_mini *m)
 {
 	int		i;
 	t_token	*prev;
 	t_token	*next;
 
-	if (!check_quotes(s))
+	if (!check_quotes(*s))
 		return (NULL);
-	replace_variables(&s, m, 0, 0);
-	if (is_variable(s, m))
+	replace_variables(s, m);
+	if (is_variable(*s, m))
 		return (NULL);
 	i = 0;
 	prev = NULL;
-	while (s[i])
+	while ((*s)[i])
 	{
-		skip_spaces(s, &i);
-		next = get_next_token(s + i);
+		skip_spaces(*s, &i);
+		next = get_next_token(*s, &i);
 		next->prev = prev;
 		if (prev)
 			prev->next = next;
 		arg_type(next);
 		prev = next;
-		i++;
 	}
 	if (prev)
 		prev->next = NULL;
@@ -119,7 +116,10 @@ void	get_command(t_mini *mini)
 {
 	char	*s;
 
-	s = readline("minishell:) ");
-	mini->start_tock = parse_str(s, mini);
+	s = readline("minishell:> ");
+	mini->start_tock = parse_str(&s, mini);
+	write(1, s, ft_strlen(s));
+	write(1, "\n", 1);
+	free(s);
 	return ;
 }

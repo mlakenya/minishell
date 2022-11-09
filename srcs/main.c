@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/07 23:20:20 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:19:03 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	main(void)
 		while (t)
 		{
 			next = t->next;
-			if (t->val != NULL)
-				free(t->val);
-			free(t);
+			// if (t->val != NULL)
+			// 	free(t->val);
+			// free(t);
 			t = next;
 		}
 	}

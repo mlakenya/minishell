@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "libft.h": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "typeinfo": "c"
     },
     "files.autoSave": "afterDelay"
 }
