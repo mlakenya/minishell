@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/08 20:44:43 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:33:21 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ void	arg_type(t_token	*token)
 t_token	*get_next_token(char *s,int *i)
 {
 	t_token	*new_token;
+	int		start;
 
+	start = *i;
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -75,10 +77,10 @@ t_token	*get_next_token(char *s,int *i)
 			break ;
 		(*i)++;
 	}
-	new_token->val = (char *)malloc(*i + 1);
+	new_token->val = (char *)malloc(*i + 1 - start);
 	if (new_token->val == NULL)
 		return (NULL);
-	ft_strlcpy(new_token->val, s, *i + 1);
+	ft_strlcpy(new_token->val, s + start, *i + 1 - start);
 	return (new_token);
 }
 
