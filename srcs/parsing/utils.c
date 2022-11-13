@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 23:17:47 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/08 19:03:40 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:26:17 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ int	is_determinator(char *s, int i)
 	if (s[i] == '<')
 		return (1);
 	if (s[i] == '$')
+		return (1);
+	if (s[i] == '|')
+		return (1);
+	return (0);
+}
+
+int is_separator(char *s, int i)
+{
+	if (s[i] == '>')
+		return (1);
+	if (s[i] == '<')
 		return (1);
 	if (s[i] == '|')
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/08 19:19:12 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:26:55 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	sigquit(int code);
 */
 void	get_command(t_mini *mini);
 int		is_determinator(char *s, int i);
+int 	is_separator(char *s, int i);
 void	skip_spaces(char *str, int *i);
 
 /*
