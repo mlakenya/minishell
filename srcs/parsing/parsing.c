@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/13 18:48:01 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:46:59 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,23 @@
 int		quotes(char *line, int index)
 {
 	int	i;
-	int	open;
+	int	quote;
 
 	i = 0;
-	open = 0;
+	quote = 0;
 	while (line[i] && i != index)
 	{
-		if (i > 0 && line[i - 1] == '\\')
-			;
-		else if (open == 0 && line[i] == '\"')
-			open = 1;
-		else if (open == 0 && line[i] == '\'')
-			open = 2;
-		else if (open == 1 && line[i] == '\"')
-			open = 0;
-		else if (open == 2 && line[i] == '\'')
-			open = 0;
+		if (quote == 0 && line[i] == '\"')
+			quote = 1;
+		else if (quote == 0 && line[i] == '\'')
+			quote = 2;
+		else if (quote == 1 && line[i] == '\"')
+			quote = 0;
+		else if (quote == 2 && line[i] == '\'')
+			quote = 0;
 		i++;
 	}
-	return (open);
+	return (quote);
 }
 
 int	check_quotes(char *s)
@@ -49,10 +47,69 @@ int	check_quotes(char *s)
 	return (1);
 }
 
+//-------------------------------Squish args------------------------------------
+
+t_token	*prev_sep(t_token *token)
+{
+	while (token && token->type < TRUNC)
+		token = token->prev;
+	return (token);
+}
+
+int		is_last_valid_arg(t_token *token)
+{
+	t_token	*prev;
+
+	if (!token || token->type == CMD || token->type == ARG)
+	{
+		prev = prev_sep(token);
+		if (!prev || prev->type == PIPE)
+			return (1);
+		return (0);
+	}
+	else
+		return (0);
+}
+
+void	squish_args(t_mini *mini)
+{
+	t_token	*token;
+	t_token	*prev;
+
+	token = mini->start_tock;
+	while (token)
+	{
+		prev = prev_sep(token);
+		if (token->type == ARG && prev && (prev->type == TRUNC
+			|| prev->type == APPEND || prev->type == INPUT))
+		{
+			while (is_last_valid_arg(prev) == 0)
+				prev = prev->prev;
+			token->prev->next = token->next;
+			if (token->next)
+				token->next->prev = token->prev;
+			token->prev = prev;
+			if (prev)
+				token->next = prev->next;
+			else
+				token->next = mini->start_tock;
+			if (!prev)
+				prev = token;
+			prev->next->prev = token;
+			if (mini->start_tock->prev)
+				prev->next = prev->next;
+			else
+				prev->next = token;
+			if (mini->start_tock->prev)
+				mini->start_tock = mini->start_tock->prev;
+		}
+		token = token->next;
+	}
+}
+
 //------------------------------------------------------------------------------
 
-
-int count_seps(char *s)
+int	count_seps(char *s)
 {
 	int	seps;
 	int	i;
@@ -68,35 +125,33 @@ int count_seps(char *s)
 	return (seps);
 }
 
-char	*space_line(char *line)
+char *add_spaces(char *s)
 {
-	char	*new;
 	int		i;
 	int		j;
+	char	*s_spcs;
 
 	i = 0;
 	j = 0;
-	new = (char *)malloc(ft_strlen(line) + count_seps(line) * 2 + 1);
-	if (!new)
+	s_spcs = (char *)malloc(ft_strlen(s) + count_seps(s) * 2 + 1);
+	if (!s_spcs)
 		return (NULL);
-	while (new && line[i])
+	while (s[i])
 	{
-		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
-			new[j++] = (char)(-line[i++]);
-		else if (quotes(line, i) == 0 && is_separator(line, i))
+		if (quotes(s, i) == 0 && is_separator(s, i))
 		{
-			new[j++] = ' ';
-			new[j++] = line[i++];
-			if (quotes(line, i) == 0 && line[i] == line[i - 1])
-				new[j++] = line[i++];
-			new[j++] = ' ';
+			s_spcs[j++] = ' ';
+			s_spcs[j++] = s[i++];
+			if (quotes(s, i) == 0 && s[i] == s[i - 1])
+				s_spcs[j++] = s[i++];
+			s_spcs[j++] = ' ';	
 		}
 		else
-			new[j++] = line[i++];
+			s_spcs[j++] = s[i++];
 	}
-	new[j] = '\0';
-	free(line);
-	return (new);
+	s_spcs[j] = 0;
+	free(s);
+	return (s_spcs);
 }
 
 void	arg_type(t_token	*token)
@@ -109,6 +164,8 @@ void	arg_type(t_token	*token)
 		token->type = APPEND;
 	else if (ft_strncmp(token->val, "<", ft_strlen(token->val)) == 0)
 		token->type = INPUT;
+	else if (ft_strncmp(token->val, "<<", ft_strlen(token->val)) == 0)
+		token->type = HEREDOC;
 	else if (ft_strncmp(token->val, "|", ft_strlen(token->val)) == 0)
 		token->type = PIPE;
 	else if (token->prev == NULL || token->prev->type >= TRUNC)
@@ -168,15 +225,21 @@ t_token	*parse_str(char **s, t_mini *m)
 void	get_command(t_mini *mini)
 {
 	char	*s;
+	t_token	*token;
 
 	s = readline("minishell:> ");
-	s = space_line(s);
+	s = add_spaces(s);
 	if (s)
 	{
 		mini->start_tock = parse_str(&s, mini);
-		write(1, s, ft_strlen(s));
-		write(1, "\n", 1);
 		free(s);
+		squish_args(mini);
+		token = mini->start_tock;
+		while (token)
+		{
+			if (token->type == ARG)
+				arg_type(token);
+			token = token->next;
+		}
 	}
-	return ;
 }

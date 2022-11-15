@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/13 18:26:55 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:36:57 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define APPEND 4
 # define INPUT 5
 # define PIPE 6
+# define HEREDOC 7
 
 typedef struct s_sig
 {
