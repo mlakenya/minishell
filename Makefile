@@ -6,26 +6,47 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 15:36:00 by mlakenya          #+#    #+#              #
-#    Updated: 2022/11/07 23:34:22 by mlakenya         ###   ########.fr        #
+#    Updated: 2022/11/21 11:50:54 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
-HEDEAR	= includes/minishell.h
+HEDEAR	= includes/minishell.h gnl/get_next_line.h
 
-PARSING	= parsing utils
+PARSING	= parsing utils utils2 heredoc line_check 
+
+HISTORY = history
+
+HEREDOC = heredoc_utils
+
+FREEERR = error free
+
+ENV     = copy_env env shlvl
 
 VARS	= variables variables2
 
-SIGNAL	= signal
+COMMON	= signal token init loop_read
 
-MAIN	= main
+MAIN	= main 
+
+GNL     = get_next_line get_next_line_utils
+
+EXEC    = bin builtin exec redir fds
+
+BUILTIN = cd echo env exit export pwd unset
 
 SRCS	= $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
-		  $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
-		  $(addsuffix .c, $(addprefix srcs/parsing/, $(VARS))) \
-		  $(addsuffix .c, $(addprefix srcs/, $(SIGNAL)))
+		  $(addsuffix .c, $(MAIN)) \
+		  $(addsuffix .c, $(addprefix srcs/variables/, $(VARS))) \
+		  $(addsuffix .c, $(addprefix srcs/, $(COMMON))) \
+		  $(addsuffix .c, $(addprefix srcs/history/, $(HISTORY))) \
+		  $(addsuffix .c, $(addprefix srcs/heredoc/, $(HEREDOC))) \
+		  $(addsuffix .c, $(addprefix srcs/free_error/, $(FREEERR))) \
+		  $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
+		  $(addsuffix .c, $(addprefix gnl/, $(GNL))) \
+		  $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+		  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTIN)))
 
 OBJ		= $(SRCS:%.c=%.o)
 
@@ -35,7 +56,7 @@ READL	= -lreadline
 
 GCC		= gcc
 
-CFLAGC	= -g -Wall -Wextra -Werror -I includes/ -I libft/  -I/Users/klemongr/.brew/opt/readline/include
+CFLAGC	= -g -Wall -Wextra -Werror -I includes/ -I libft/ -I gnl/
 
 all:		$(NAME)
 

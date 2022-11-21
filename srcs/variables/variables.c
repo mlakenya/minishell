@@ -6,30 +6,30 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:27:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/08 19:22:34 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/21 00:23:51 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_variable	*init_var(void)
+t_var	*init_var(void)
 {
-	t_variable	*lst;
+	t_var	*lst;
 
-	lst = (t_variable *) malloc(sizeof(t_variable));
+	lst = (t_var *) malloc(sizeof(t_var));
 	if (!lst)
 		return (NULL);
-	lst->name = "";
-	lst->value = "";
+	lst->name = ft_strdup("");
+	lst->value = ft_strdup("");
 	lst->next = NULL;
 	return (lst);
 }
 
-t_variable	*add_var(t_variable *lst, char *name, char *value)
+t_var	*add_var(t_var *lst, char *name, char *value)
 {
-	t_variable	*temp;
+	t_var	*temp;
 
-	temp = (t_variable *) malloc(sizeof(t_variable));
+	temp = (t_var *) malloc(sizeof(t_var));
 	if (!temp)
 		return (NULL);
 	while (lst->next)
@@ -41,9 +41,9 @@ t_variable	*add_var(t_variable *lst, char *name, char *value)
 	return (temp);
 }
 
-t_variable	*del_var(t_variable *start, t_variable *for_del)
+t_var	*del_var(t_var *start, t_var *for_del)
 {
-	t_variable	*temp;
+	t_var	*temp;
 
 	temp = start;
 	while (temp->next != for_del)
@@ -55,7 +55,7 @@ t_variable	*del_var(t_variable *start, t_variable *for_del)
 
 int	add_or_replace_var(char *name, char *value, t_mini *mini)
 {
-	t_variable	*var;
+	t_var	*var;
 
 	var = mini->variables;
 	while (var != NULL)
@@ -68,6 +68,12 @@ int	add_or_replace_var(char *name, char *value, t_mini *mini)
 			return (1);
 		}
 		var = var->next;
+	}
+	var = find_variable(name, mini, ft_strlen(name));
+	if (var)
+	{
+		free(var->value);
+		var->value = value;
 	}
 	var = mini->variables;
 	while (var->next != NULL)

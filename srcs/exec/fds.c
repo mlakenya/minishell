@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 20:04:42 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/21 11:21:40 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/21 11:21:42 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minishell.h"
 
-int	ft_lstsize(t_lst *lst)
+void	ft_close(int fd)
 {
-	size_t	i;
+	if (fd > 0)
+		close(fd);
+}
 
-	i = 0;
-	while (lst && ++i)
-		lst = lst->next;
-	return (i);
+void	reset_std(t_mini *mini)
+{
+	dup2(mini->in, STDIN);
+	dup2(mini->out, STDOUT);
+}
+
+void	close_fds(t_mini *mini)
+{
+	ft_close(mini->fdin);
+	ft_close(mini->fdout);
+	ft_close(mini->pipin);
+	ft_close(mini->pipout);
+}
+
+void	reset_fds(t_mini *mini)
+{
+	mini->fdin = -1;
+	mini->fdout = -1;
+	mini->pipin = -1;
+	mini->pipout = -1;
+	mini->pid = -1;
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 20:04:34 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/19 15:10:58 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/19 22:39:30 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minishell.h"
 
-void	ft_lstdelone(t_lst *lst, void (*del)(void *))
+char	*get_hd_file_name(t_mini *minishell)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	char	*buff_1;
+	char	*buff_2;
+
+	buff_1 = NULL;
+	buff_1 = getcwd(buff_1, 1024);
+	if (!buff_1)
+		print_error_exit(minishell, NULL, NULL, strerror(errno));
+	buff_2 = ft_strjoin(buff_1, "/.m_heredoc");
+	free(buff_1);
+	if (!buff_2)
+		print_error_exit(minishell, NULL, NULL, strerror(errno));
+	return (buff_2);
 }

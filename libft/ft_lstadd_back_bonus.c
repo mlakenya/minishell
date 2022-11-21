@@ -6,15 +6,15 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 20:04:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/25 20:06:37 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_lst **lst, t_lst *new)
 {
-	t_list	*begin;
+	t_lst	*begin;
 
 	if (!(*lst))
 	{

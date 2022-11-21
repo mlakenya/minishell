@@ -6,29 +6,32 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:49:54 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/08 19:21:13 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:48:39 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_variable(char *s, t_mini *m, int len)
+t_var	*find_variable(char *s, t_mini *m, int len)
 {
-	t_variable	*var;
-	char		*str;
+	t_var		*var;
+	t_var		*var_env;
 
 	var = m->variables;
 	while (var && len)
 	{
 		if (ft_strncmp(s, var->name, len) == 0)
-			return (ft_strdup(var->value));
+			return (var);
 		var = var->next;
 	}
-	str = (char *)malloc(1);
-	if (!str)
-		return (NULL);
-	str[0] = 0;
-	return (str);
+	var_env = m->env;
+	while (var_env && len)
+	{
+		if (ft_strncmp(s, var_env->name, len) == 0)
+			return (var_env);
+		var_env = var_env->next;
+	}
+	return (NULL);
 }
 
 char	*change_substr(char *src, char *rep, int st, int end)
@@ -46,17 +49,20 @@ char	*change_substr(char *src, char *rep, int st, int end)
 
 int	replace(char **s, int *start, t_mini *mini)
 {
-	char	*replace;
-	char	*new;
-	int		j;
+	char		*replace;
+	char		*new;
+	int			j;
+	t_var		*var;
 
 	j = *start;
 	(*start)++;
 	while ((*s)[*start] && !is_determinator(*s, *start))
 		(*start)++;
-	replace = find_variable(*s + j + 1, mini, *start - j - 1);
-	if (!replace)
-		return (0);
+	var = find_variable(*s + j + 1, mini, *start - j - 1);
+	if (var)
+		replace = ft_strdup(var->value);
+	else
+		replace = ft_strdup("\0");
 	new = change_substr(*s, replace, j, *start);
 	*start = j + ft_strlen(replace);
 	free(replace);
@@ -89,4 +95,21 @@ int	replace_variables(char **s, t_mini *m)
 		}
 	}
 	return (1);
+}
+
+void	clear_variables(t_mini *mini)
+{
+	t_var	*var;
+	t_var	*tmp;
+
+	var = mini->variables;
+	while (var)
+	{
+		free(var->name);
+		free(var->value);
+		tmp = var;
+		var = var->next;
+		free(tmp);
+	}
+	mini->variables = NULL;
 }

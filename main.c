@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 20:04:34 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/10/28 14:57:36 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/19 22:36:05 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minishell.h"
 
-void	ft_lstdelone(t_lst *lst, void (*del)(void *))
+t_sig	g_signals;
+
+int	main(int ac, char **av, char **env)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	t_mini	*mini;
+
+	(void)av;
+	(void)ac;
+	mini = init_mini(env);
+	init_error(mini);
+	loop_read(mini);
+	return (free_minishell(mini));
 }

@@ -2,7 +2,29 @@
     "files.associations": {
         "libft.h": "c",
         "ranges": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "minishell.h": "c",
+        "optional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "unistd.h": "c",
+        "sstream": "c",
+        "wait.h": "c",
+        "*.tcc": "c",
+        "algorithm": "c",
+        "memory": "c",
+        "random": "c",
+        "fstream": "c",
+        "iosfwd": "c",
+        "iostream": "c",
+        "numeric": "c",
+        "streambuf": "c"
     },
     "files.autoSave": "afterDelay"
 }

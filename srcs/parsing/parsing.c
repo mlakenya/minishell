@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/15 19:46:59 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/21 05:09:06 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //---------------------Checking is string of commands if correct----------------
 
-int		quotes(char *line, int index)
+int	quotes(char *line, int index)
 {
 	int	i;
 	int	quote;
@@ -49,20 +49,22 @@ int	check_quotes(char *s)
 
 //-------------------------------Squish args------------------------------------
 
-t_token	*prev_sep(t_token *token)
+t_token	*prev_sep(t_token *token, int skip)
 {
+	if (token && skip)
+		token = token->prev;
 	while (token && token->type < TRUNC)
 		token = token->prev;
 	return (token);
 }
 
-int		is_last_valid_arg(t_token *token)
+int	is_last_valid_arg(t_token *token)
 {
 	t_token	*prev;
 
 	if (!token || token->type == CMD || token->type == ARG)
 	{
-		prev = prev_sep(token);
+		prev = prev_sep(token, 0);
 		if (!prev || prev->type == PIPE)
 			return (1);
 		return (0);
@@ -79,9 +81,9 @@ void	squish_args(t_mini *mini)
 	token = mini->start_tock;
 	while (token)
 	{
-		prev = prev_sep(token);
+		prev = prev_sep(token, 0);
 		if (token->type == ARG && prev && (prev->type == TRUNC
-			|| prev->type == APPEND || prev->type == INPUT))
+				|| prev->type == APPEND || prev->type == INPUT))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
@@ -125,7 +127,7 @@ int	count_seps(char *s)
 	return (seps);
 }
 
-char *add_spaces(char *s)
+char	*add_spaces(char *s)
 {
 	int		i;
 	int		j;
@@ -144,7 +146,7 @@ char *add_spaces(char *s)
 			s_spcs[j++] = s[i++];
 			if (quotes(s, i) == 0 && s[i] == s[i - 1])
 				s_spcs[j++] = s[i++];
-			s_spcs[j++] = ' ';	
+			s_spcs[j++] = ' ';
 		}
 		else
 			s_spcs[j++] = s[i++];
@@ -154,7 +156,7 @@ char *add_spaces(char *s)
 	return (s_spcs);
 }
 
-void	arg_type(t_token	*token)
+void	arg_type(t_token *token)
 {
 	if (ft_strncmp(token->val, "", ft_strlen(token->val)) == 0)
 		token->type = EMPTY;
@@ -176,20 +178,17 @@ void	arg_type(t_token	*token)
 
 t_token	*get_next_token(char *s, int *i)
 {
-	t_token	*new_token;
+	char	*value;
 	int		start;
 
 	start = *i;
-	new_token = (t_token *)malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
 	while (s[*i] && s[*i] != ' ')
 		(*i)++;
-	new_token->val = (char *)malloc(*i + 1 - start);
-	if (new_token->val == NULL)
+	value = (char *)malloc(*i + 1 - start);
+	if (value == NULL)
 		return (NULL);
-	ft_strlcpy(new_token->val, s + start, *i + 1 - start);
-	return (new_token);
+	ft_strlcpy(value, s + start, *i + 1 - start);
+	return (create_token(value));
 }
 
 t_token	*parse_str(char **s, t_mini *m)
@@ -216,30 +215,31 @@ t_token	*parse_str(char **s, t_mini *m)
 		prev = next;
 	}
 	if (prev)
+	{
 		prev->next = NULL;
-	while (prev->prev)
-		prev = prev->prev;
+		while (prev->prev)
+			prev = prev->prev;
+	}
 	return (prev);
 }
 
-void	get_command(t_mini *mini)
+void	get_tokens(t_mini *mini)
 {
-	char	*s;
+	char	*line;
 	t_token	*token;
 
-	s = readline("minishell:> ");
-	s = add_spaces(s);
-	if (s)
+	line = ft_strdup(mini->cmd_line);
+	line = add_spaces(line);
+	mini->start_tock = parse_str(&line, mini);
+	free(line);
+	if (!handle_heredocs(mini))
+		return (clear_tokens(mini));
+	squish_args(mini);
+	token = mini->start_tock;
+	while (token)
 	{
-		mini->start_tock = parse_str(&s, mini);
-		free(s);
-		squish_args(mini);
-		token = mini->start_tock;
-		while (token)
-		{
-			if (token->type == ARG)
-				arg_type(token);
-			token = token->next;
-		}
+		if (token->type == ARG)
+			arg_type(token);
+		token = token->next;
 	}
 }

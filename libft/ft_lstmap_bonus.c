@@ -6,15 +6,15 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 20:04:38 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/25 20:06:33 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-static void	*erase(t_list *begin, void (*del)(void *))
+static void	*erase(t_lst *begin, void (*del)(void *))
 {
-	t_list	*tmp;
+	t_lst	*tmp;
 
 	while (begin)
 	{
@@ -27,11 +27,11 @@ static void	*erase(t_list *begin, void (*del)(void *))
 	return (NULL);
 }
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_lst	*ft_lstmap(t_lst *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new;
-	t_list	*begin;
-	t_list	*prev;
+	t_lst	*new;
+	t_lst	*begin;
+	t_lst	*prev;
 
 	prev = NULL;
 	begin = NULL;

@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 20:04:34 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/21 09:34:48 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/21 14:37:58 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minishell.h"
 
-void	ft_lstdelone(t_lst *lst, void (*del)(void *))
+int		ft_env(t_var *env)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	while (env)
+	{
+		write(1, env->name, ft_strlen(env->name));
+		write(1, "=", 1);
+		write(1, env->value, ft_strlen(env->value));
+		write(1, "\n", 1);
+		env = env->next;
+	}
+	return (SUCCESS);
 }

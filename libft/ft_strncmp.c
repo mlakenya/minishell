@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 20:05:16 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/25 20:09:04 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:53:50 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	const unsigned char	*uns_s1;
 	const unsigned char	*uns_s2;
 
+	if (!s1)
+	{
+		if (!s2)
+			return (0);
+		else
+			return (s2[0]);
+	}
 	uns_s1 = (const unsigned char *)s1;
 	uns_s2 = (const unsigned char *)s2;
 	i = 0;

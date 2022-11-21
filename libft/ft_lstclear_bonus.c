@@ -6,16 +6,16 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 20:04:29 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/25 20:06:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_lst **lst, void (*del)(void *))
 {
-	t_list	*begin;
-	t_list	*tmp;
+	t_lst	*begin;
+	t_lst	*tmp;
 
 	if (!del)
 		return ;

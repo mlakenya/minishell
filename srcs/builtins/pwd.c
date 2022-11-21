@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 14:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/13 17:40:19 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/21 09:33:57 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/21 09:34:26 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_sig	g_signals;
-
-void	init_mini(t_mini *m)
+int		ft_pwd(void)
 {
-	m->start_tock = 0;
-	m->variables = init_var();
-}
+	char	cwd[PATH_MAX];
 
-int	main(void)
-{
-	t_mini	m;
-	t_token	*t;
-	t_token	*next;
-
-	init_mini(&m);
-	signal(SIGINT, &sigint);
-	signal(SIGQUIT, &sigquit);
-	while (1)
+	if (getcwd(cwd, PATH_MAX))
 	{
-		get_command(&m);
-		t = m.start_tock;
-		while (t)
-		{
-			next = t->next;
-			t = next;
-		}
+		ft_putendl_fd(cwd, 1);
+		return (SUCCESS);
 	}
+	else
+		return (ERROR);
 }

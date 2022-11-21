@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 20:04:34 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 22:24:05 by mlakenya         ###   ########.fr       */
+/*   Created: 2022/11/21 09:53:05 by mlakenya          #+#    #+#             */
+/*   Updated: 2022/11/21 14:04:52 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minishell.h"
 
-void	ft_lstdelone(t_lst *lst, void (*del)(void *))
+int	ft_unset(char **args, t_mini *mini)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	int		i;
+	char	*s;
+	
+	if (!(args[1]))
+		return (SUCCESS);
+	i = 1;
+	while (args[i])
+	{
+		s = ft_strjoin(args[i], "=");
+		if (!s)
+			return (ERROR);
+		is_variable(s, mini);
+		i++;
+	}
+	return (SUCCESS);
 }

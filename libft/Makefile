@@ -6,7 +6,7 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 20:05:41 by mlakenya          #+#    #+#              #
-#    Updated: 2022/10/26 15:20:42 by mlakenya         ###   ########.fr        #
+#    Updated: 2022/11/18 21:12:45 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,10 +66,10 @@ AR		= ar -crs
 RM		= rm -f
 
 .c.o: 
-			$(GCC) $< -o ${<:.c=.o} -I .
+			@$(GCC) $< -o ${<:.c=.o} -I .
 
 $(NAME):	$(OBJS) $(HEADS)
-			$(AR) $(NAME) $(OBJS)
+			@$(AR) $(NAME) $(OBJS)
 
 all:		$(NAME)
 
