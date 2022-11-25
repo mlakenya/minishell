@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:27:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 00:23:51 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:52:40 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,13 @@ int	add_or_replace_var(char *name, char *value, t_mini *mini)
 {
 	t_var	*var;
 
-	var = mini->variables;
-	while (var != NULL)
-	{
-		if (strncmp(var->name, name, strlen(name)) == 0)
-		{
-			free (var->value);
-			free (name);
-			var->value = value;
-			return (1);
-		}
-		var = var->next;
-	}
 	var = find_variable(name, mini, ft_strlen(name));
 	if (var)
 	{
 		free(var->value);
+		free(name);
 		var->value = value;
+		return (1);
 	}
 	var = mini->variables;
 	while (var->next != NULL)
