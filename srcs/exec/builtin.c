@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 11:37:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:37:22 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int		is_builtin(char *command)
 {
-	if (ft_strncmp(command, "echo", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "echo", 5) == 0)
 		return (1);
-	if (ft_strncmp(command, "cd", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "cd", 3) == 0)
 		return (1);
-	if (ft_strncmp(command, "pwd", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "pwd", 4) == 0)
 		return (1);
-	if (ft_strncmp(command, "env", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "env", 4) == 0)
 		return (1);
-	if (ft_strncmp(command, "export", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "export", 7) == 0)
 		return (1);
-	if (ft_strncmp(command, "unset", ft_strlen(command)) == 0)
+	if (ft_strncmp(command, "unset", 6) == 0)
 		return (1);
 	return (0);
 }

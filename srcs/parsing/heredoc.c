@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 22:30:00 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 03:33:09 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:37:35 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_next(t_token *token, char **s)
 	new_s = readline(">");
 	if (!new_s || !new_s[0])
 		return (1);
-	if (ft_strncmp(new_s, token->next->val, ft_strlen(new_s)) == 0)
+	if (ft_strncmp(new_s, token->next->val, 1024) == 0)
 	{
 		free(new_s);
 		return (0);

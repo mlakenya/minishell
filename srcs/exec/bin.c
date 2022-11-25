@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 12:38:05 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:34:41 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char		*check_dir(char *bin, char *command)
 		return (NULL);
 	while ((item = readdir(folder)))
 	{
-		if (ft_strncmp(item->d_name, command, ft_strlen(item->d_name)) == 0)
+		if (ft_strncmp(item->d_name, command, 1024) == 0)
 			path = path_join(bin, item->d_name);
 	}
 	closedir(folder);

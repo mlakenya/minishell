@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 05:09:06 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:37:59 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,17 +158,17 @@ char	*add_spaces(char *s)
 
 void	arg_type(t_token *token)
 {
-	if (ft_strncmp(token->val, "", ft_strlen(token->val)) == 0)
+	if (ft_strncmp(token->val, "", 1) == 0)
 		token->type = EMPTY;
-	else if (ft_strncmp(token->val, ">", ft_strlen(token->val)) == 0)
+	else if (ft_strncmp(token->val, ">", 2) == 0)
 		token->type = TRUNC;
-	else if (ft_strncmp(token->val, ">>", ft_strlen(token->val)) == 0)
+	else if (ft_strncmp(token->val, ">>", 2) == 0)
 		token->type = APPEND;
-	else if (ft_strncmp(token->val, "<", ft_strlen(token->val)) == 0)
+	else if (ft_strncmp(token->val, "<", 2) == 0)
 		token->type = INPUT;
-	else if (ft_strncmp(token->val, "<<", ft_strlen(token->val)) == 0)
+	else if (ft_strncmp(token->val, "<<", 2) == 0)
 		token->type = HEREDOC;
-	else if (ft_strncmp(token->val, "|", ft_strlen(token->val)) == 0)
+	else if (ft_strncmp(token->val, "|", 2) == 0)
 		token->type = PIPE;
 	else if (token->prev == NULL || token->prev->type >= TRUNC)
 		token->type = CMD;
@@ -207,6 +207,8 @@ t_token	*parse_str(char **s, t_mini *m)
 	while ((*s)[i])
 	{
 		skip_spaces(*s, &i);
+        if (!(*s)[i])
+            break ;
 		next = get_next_token(*s, &i);
 		next->prev = prev;
 		if (prev)

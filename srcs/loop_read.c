@@ -6,11 +6,11 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 18:34:09 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:29:48 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	print_error(char *err)
 {
@@ -34,7 +34,7 @@ void	loop_read(t_mini *mini)
 	read_history_file(mini);
 	while (1)
 	{
-        sig_init();
+		sig_init();
 		signal(SIGINT, &sigint);
 		signal(SIGQUIT, &sigquit);
 		line = readline("minishell$ ");

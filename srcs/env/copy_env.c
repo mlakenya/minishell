@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:50:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 11:40:42 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:35:41 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		sort_env(char **tab, int env_len)
 		i = 0;
 		while (i < env_len - 1)
 		{
-			if (ft_strncmp(tab[i], tab[i + 1], ft_strlen(tab[i])) > 0)
+			if (ft_strncmp(tab[i], tab[i + 1], 1024) > 0)
 			{
 				tmp = tab[i];
 				tab[i] = tab[i + 1];

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:41:32 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 11:42:14 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:35:47 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_var	*find_list(t_var *mini_env, char *key)
 	ptr = mini_env;
 	while (ptr)
 	{
-		if (ptr->name && ft_strncmp(ptr->name, key, ft_strlen(key)) == 0)
+		if (ptr->name && ft_strncmp(ptr->name, key, 1024) == 0)
 			return (ptr);
 		ptr = ptr->next;
 	}

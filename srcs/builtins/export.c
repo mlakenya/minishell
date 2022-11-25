@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 15:52:06 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 21:35:34 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			is_in_env(t_var *env, char *args)
 	while (env && env->next)
 	{
 		get_env_name(env_name, env->value);
-		if (ft_strncmp(var_name, env_name, ft_strlen(var_name)) == 0)
+		if (ft_strncmp(var_name, env_name, 1024) == 0)
 		{
 			free(env->value);
 			env->value = ft_strdup(args);
