@@ -15,8 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft.h"
-# include "get_next_line.h"
+# include "../libft/libft.h"
+# include "../gnl/get_next_line.h"
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -136,6 +136,7 @@ int			replace_variables(char **s, t_mini *m);
 t_var		*init_var(void);
 t_var		*find_variable(char *s, t_mini *m, int len);
 void		clear_variables(t_mini *mini);
+void        del_var_by_name(t_mini *mini, char *for_del);
 
 /*
  * token
@@ -171,6 +172,7 @@ void		loop_read(t_mini *mini);
 int			free_env_list(t_var *head);
 int			free_minishell(t_mini *minishell);
 char		**free_array(void **array);
+void	    free_env_node(t_var *node);
 
 /*
  * env
@@ -229,7 +231,7 @@ int		exec_builtin(char **args, t_mini *mini);
 void	mini_exit(t_mini *mini, char **cmd);
 int		ft_echo(char **args);
 int		ft_export(char **args, t_var *env, t_mini *mini);
-int		ft_cd(char **args, t_var *env, t_mini *mini);
+int		ft_cd(char **args, t_mini *mini);
 int		ft_env(t_var *env);
 int		ft_pwd(void);
 int		ft_unset(char **args, t_mini *mini);
