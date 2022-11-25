@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	redir(t_mini *mini, t_token *token, int type)
 {
@@ -64,7 +64,7 @@ int	minipipe(t_mini *mini)
 		mini->no_exec = 0;
 		return (2);
 	}
-	else
+	else //when use?
 	{
 		ft_close(pipefd[0]);
 		dup2(pipefd[1], STDOUT);

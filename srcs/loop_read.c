@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	print_error(char *err)
 {
@@ -22,8 +22,6 @@ void	free_tocken_add_history(t_mini *minishell)
 {
 	clear_tokens(minishell);
 	minishell->start_tock = NULL;
-	// free_mini_cmds(minishell->cmds);
-	// minishell->cmds = NULL;
 	add_history_list(minishell, minishell->cmd_line);
 	add_history(minishell->cmd_line);
 	minishell->cmd_line = NULL;
@@ -36,10 +34,10 @@ void	loop_read(t_mini *mini)
 	read_history_file(mini);
 	while (1)
 	{
+        sig_init();
 		signal(SIGINT, &sigint);
 		signal(SIGQUIT, &sigquit);
 		line = readline("minishell$ ");
-		sig_init();
 		if (!line)
 			print_error_exit(mini, NULL, NULL, strerror(errno));
 		if (*line != '\0' && *line != '\n')

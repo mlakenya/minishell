@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_var	*init_var(void)
 {
@@ -41,16 +41,38 @@ t_var	*add_var(t_var *lst, char *name, char *value)
 	return (temp);
 }
 
-t_var	*del_var(t_var *start, t_var *for_del)
+void    del_var_by_name(t_mini *mini, char *for_del)
 {
-	t_var	*temp;
+	t_var	*next;
+    t_var   *prev;
 
-	temp = start;
-	while (temp->next != for_del)
-		temp = temp->next;
-	temp->next = NULL;
-	free(for_del);
-	return (temp);
+    prev = NULL;
+    next = mini->variables;
+    while (next)
+    {
+        if (ft_strncmp(next->name, for_del, 1024) == 0)
+        {
+            if (prev)
+                prev->next = next->next;
+            free_env_node(next);
+            break ;
+        }
+        prev = next;
+        next = next->next;
+    }
+    next = mini->env;
+    while (next)
+    {
+        if (ft_strncmp(next->name, for_del, 1024) == 0)
+        {
+            if (prev)
+                prev->next = next->next;
+            free_env_node(next);
+            break ;
+        }
+        prev = next;
+        next = next->next;
+    }
 }
 
 int	add_or_replace_var(char *name, char *value, t_mini *mini)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int		is_builtin(char *command)
 {
@@ -37,7 +37,7 @@ int		exec_builtin(char **args, t_mini *mini)
 	if (ft_strncmp(args[0], "echo", 4) == 0)
 		result = ft_echo(args);
 	if (ft_strncmp(args[0], "cd", 2) == 0)
-		result = ft_cd(args, mini->env, mini);
+		result = ft_cd(args, mini);
 	if (ft_strncmp(args[0], "pwd", 3) == 0)
 		result = ft_pwd();
 	if (ft_strncmp(args[0], "env", 3) == 0)

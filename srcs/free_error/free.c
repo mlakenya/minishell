@@ -1,4 +1,8 @@
-/* ************************************************************************** */
+/* **********************************************************************emp->next != for_del)
+		temp = temp->next;
+	temp->next = NULL;
+	free(for_del);
+	return (**** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
@@ -10,7 +14,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	free_env_node(t_var *node)
 {
@@ -90,8 +94,6 @@ int	free_minishell(t_mini *minishell)
 			free_mini_list(minishell->env);
 		if (minishell->start_tock)
 			clear_tokens(minishell);
-		// if (minishell->cmds)
-		// 	free_mini_cmds(minishell->cmds);
 		if (minishell->history)
 			free_hist_list(minishell->history);
 		if (minishell->env_str)

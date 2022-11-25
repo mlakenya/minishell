@@ -10,22 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_unset(char **args, t_mini *mini)
 {
 	int		i;
-	char	*s;
 	
 	if (!(args[1]))
 		return (SUCCESS);
 	i = 1;
 	while (args[i])
 	{
-		s = ft_strjoin(args[i], "=");
-		if (!s)
-			return (ERROR);
-		is_variable(s, mini);
+		del_var_by_name(mini, args[i]);
 		i++;
 	}
 	return (SUCCESS);

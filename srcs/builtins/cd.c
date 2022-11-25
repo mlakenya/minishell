@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static void		print_error(char **args)
 {
@@ -25,35 +25,6 @@ static void		print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
-static char		*get_env_path(t_var *env, const char *var, size_t len)
-{
-	char	*oldpwd;
-	int		i;
-	int		j;
-	int		s_alloc;
-
-	while (env && env->next != NULL)
-	{
-		if (ft_strncmp(env->value, var, len) == 0)
-		{
-			s_alloc = ft_strlen(env->value) - len;
-			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
-				return (NULL);
-			i = 0;
-			j = 0;
-			while (env->value[i++])
-			{
-				if (i > (int)len)
-					oldpwd[j++] = env->value[i];
-			}
-			oldpwd[j] = '\0';
-			return (oldpwd);
-		}
-		env = env->next;
-	}
-	return (NULL);
-}
-
 static int		update_oldpwd(t_mini *mini)
 {
 	char	cwd[1024];
@@ -64,48 +35,51 @@ static int		update_oldpwd(t_mini *mini)
 	oldpwd = ft_strjoin("OLDPWD=", cwd);
 	if (!oldpwd)
 		return (ERROR);
-	replace_variables(&oldpwd, mini);
+	is_variable(oldpwd, mini);
 	free(oldpwd);
 	return (SUCCESS);
 }
 
-static int		go_to_path(int option, t_var *env, t_mini *mini)
+static int		go_to_path(int option, t_mini *mini)
 {
 	int		ret;
 	char	*env_path;
+    t_var   *var;
 
 	env_path = NULL;
 	if (option == 0)
 	{
 		update_oldpwd(mini);
-		env_path = get_env_path(env, "HOME", 4);
-		if (!env_path)
-			ft_putendl_fd("minishell : cd: HOME not set", STDERR);
-		if (!env_path)
-			return (ERROR);
+		var = find_variable("HOME", mini, 10000000);
+		if (!var)
+            ft_putendl_fd("minishell : cd: HOME not set", STDERR);
+        if (!var)
+            return (ERROR);
+        env_path = var->value;
 	}
 	else if (option == 1)
 	{
-		env_path = get_env_path(env, "OLDPWD", 6);
-		if (!env_path)
+		var = find_variable("OLDPWD", mini, 10000000);
+		if (!var)
 			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);
-		if (!env_path)
+		if (!var)
 			return (ERROR);
 		update_oldpwd(mini);
+        env_path = var->value;
 	}
 	ret = chdir(env_path);
 	free(env_path);
 	return (ret);
 }
 
-int	ft_cd(char **args, t_var *env, t_mini *mini)
+int	ft_cd(char **args, t_mini *mini)
 {
 	int	cd_ret;
 
 	if (!args[1])
-		return (go_to_path(0, env, mini));
+		return (go_to_path(0, mini));
 	if (ft_strncmp(args[1], "-", 1) == 0)
-		cd_ret = go_to_path(1, env, mini);
+		cd_ret = go_to_path(1, mini);
 	else
 	{
 		update_oldpwd(mini);

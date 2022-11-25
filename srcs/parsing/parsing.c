@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 //---------------------Checking is string of commands if correct----------------
 
@@ -229,6 +229,10 @@ void	get_tokens(t_mini *mini)
 	t_token	*token;
 
 	line = ft_strdup(mini->cmd_line);
+    if (!line)
+    {
+        return (print_error_no_exit(NULL, NULL, "Can`t allocate memory"));
+    }
 	line = add_spaces(line);
 	mini->start_tock = parse_str(&line, mini);
 	free(line);
