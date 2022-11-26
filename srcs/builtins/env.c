@@ -6,13 +6,13 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:34:48 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 14:37:58 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:40:30 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		ft_env(t_var *env)
+int	ft_env(t_var *env)
 {
 	while (env)
 	{

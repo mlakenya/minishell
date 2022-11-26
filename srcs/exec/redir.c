@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 05:10:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 07:04:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 06:33:42 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,20 @@ void	redir(t_mini *mini, t_token *token, int type)
 	dup2(mini->fdout, STDOUT);
 }
 
-void	input(t_mini *mini, t_token *token)
+void	input(t_mini *mini, t_token *token, int type)
 {
 	ft_close(mini->fdin);
-	mini->fdin = open(token->val, O_RDONLY, S_IRWXU);
+	if (type == INPUT)
+		mini->fdin = open(token->val, O_RDONLY, S_IRWXU);
+	else
+		mini->fdin = open(mini->hd_file, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(token->val, STDERR);
+		if (type == HEREDOC)
+			ft_putstr_fd(mini->hd_file, STDERR);
+		else
+			ft_putstr_fd(token->val, STDERR);
 		ft_putendl_fd(": No such file or directory", STDERR);
 		mini->ret = 1;
 		mini->no_exec = 1;
@@ -64,7 +70,7 @@ int	minipipe(t_mini *mini)
 		mini->no_exec = 0;
 		return (2);
 	}
-	else //when use?
+	else
 	{
 		ft_close(pipefd[0]);
 		dup2(pipefd[1], STDOUT);

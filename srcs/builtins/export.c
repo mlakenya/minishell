@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:35:34 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:50:31 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	print_error(int error, const char *arg)
 	return (ERROR);
 }
 
-int			env_add(const char *value, t_var *env)
+int	env_add(const char *value, t_var *env)
 {
 	t_var	*new;
 	t_var	*tmp;
@@ -40,7 +40,8 @@ int			env_add(const char *value, t_var *env)
 		env->value = ft_strdup(value);
 		return (SUCCESS);
 	}
-	if (!(new = malloc(sizeof(t_var))))
+	new = malloc(sizeof(t_var));
+	if (!(new))
 		return (-1);
 	new->value = ft_strdup(value);
 	while (env && env->next && env->next->next)
@@ -51,7 +52,7 @@ int			env_add(const char *value, t_var *env)
 	return (SUCCESS);
 }
 
-char		*get_env_name(char *dest, const char *src)
+char	*get_env_name(char *dest, const char *src)
 {
 	int		i;
 
@@ -65,7 +66,7 @@ char		*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-int			is_in_env(t_var *env, char *args)
+int	is_in_env(t_var *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
@@ -85,7 +86,7 @@ int			is_in_env(t_var *env, char *args)
 	return (SUCCESS);
 }
 
-int			ft_export(char **args, t_var *env, t_mini *mini)
+int	ft_export(char **args, t_var *env, t_mini *mini)
 {
 	int		new_env;
 	int		error_ret;

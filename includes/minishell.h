@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 18:34:57 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 06:31:23 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@
 # define EMPTY 0
 # define CMD 1
 # define ARG 2
-# define HEREDOC 3
 # define TRUNC 4
 # define APPEND 5
 # define INPUT 6
 # define PIPE 7
+# define HEREDOC 8
 
 # define ERROR 1
 # define SUCCESS 0
@@ -97,8 +97,8 @@ typedef struct s_mini
 	char		*hist_file;
 	char		*hd_file;
 	int			exit_status;
-	int			in;
-	int			out;
+	int			stdin;
+	int			stdout;
 	int			fdin;
 	int			fdout;
 	int			pipin;
@@ -214,7 +214,7 @@ int			handle_heredocs(t_mini *mini);
  * exec 
 */
 void	redir(t_mini *mini, t_token *token, int type);
-void	input(t_mini *mini, t_token *token);
+void	input(t_mini *mini, t_token *token, int type);
 int		minipipe(t_mini *mini);
 void	minishell(t_mini *mini);
 void	ft_close(int fd);
@@ -229,7 +229,7 @@ int		exec_bin(char **args, t_var *env, t_mini *mini);
 int		is_builtin(char *command);
 int		exec_builtin(char **args, t_mini *mini);
 void	mini_exit(t_mini *mini, char **cmd);
-int		ft_echo(char **args);
+int		ft_echo(char **args, t_mini *mini);
 int		ft_export(char **args, t_var *env, t_mini *mini);
 int		ft_cd(char **args, t_mini *mini);
 int		ft_env(t_var *env);

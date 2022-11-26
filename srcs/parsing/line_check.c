@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:30:06 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 04:21:44 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:51:33 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,23 @@ int	quote_error_check(t_mini *minishell)
 	return (0);
 }
 
-int		check_line(t_token *token)
+int	check_line(t_token *token)
 {
 	while (token)
 	{
 		if (is_types(token, "TAI")
-		&& (!token->next || is_types(token->next, "TAIPE")))
+			&& (!token->next || is_types(token->next, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			token->next ? ft_putstr_fd(token->next->val, STDERR) : 0;
-			token->next ? 0 : ft_putstr_fd("newline", STDERR);
+			if (token->next)
+				ft_putstr_fd(token->next->val, STDERR);
+			else
+				ft_putstr_fd("newline", STDERR);
 			ft_putendl_fd("'", STDERR);
 			return (0);
 		}
 		if (is_types(token, "PE")
-		&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
+			&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->val, STDERR);

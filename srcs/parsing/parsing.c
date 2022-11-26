@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:37:59 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 01:34:09 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,19 +176,63 @@ void	arg_type(t_token *token)
 		token->type = ARG;
 }
 
-t_token	*get_next_token(char *s, int *i)
+int		next_alloc(char *line, int *i)
 {
-	char	*value;
-	int		start;
+	int		count;
+	int		j;
+	char	c;
 
-	start = *i;
-	while (s[*i] && s[*i] != ' ')
-		(*i)++;
-	value = (char *)malloc(*i + 1 - start);
-	if (value == NULL)
+	count = 0;
+	j = 0;
+	c = ' ';
+	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+			c = line[*i + j++];
+		else if (c != ' ' && line[*i + j] == c)
+		{
+			count += 2;
+			c = ' ';
+			j++;
+		}
+		else
+			j++;
+		if (line[*i + j - 1] == '\\')
+			count--;
+	}
+	return (j - count + 1);
+}
+
+t_token	*get_next_token(char *line, int *i)
+{
+	t_token	*token;
+	int		j;
+	char	c;
+
+	j = 0;
+	c = ' ';
+	token = malloc(sizeof(t_token));
+	if (!token)
 		return (NULL);
-	ft_strlcpy(value, s + start, *i + 1 - start);
-	return (create_token(value));
+	token->val = malloc(next_alloc(line, i));
+	if (!(token->val))
+		return (NULL);
+	while (line[*i] && (line[*i] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
+			c = line[(*i)++];
+		else if (c != ' ' && line[*i] == c)
+		{
+			c = ' ';
+			(*i)++;
+		}
+		else if (line[*i] == '\\' && (*i)++)
+			token->val[j++] = line[(*i)++];
+		else
+			token->val[j++] = line[(*i)++];
+	}
+	token->val[j] = '\0';
+	return (token);
 }
 
 t_token	*parse_str(char **s, t_mini *m)
@@ -207,8 +251,8 @@ t_token	*parse_str(char **s, t_mini *m)
 	while ((*s)[i])
 	{
 		skip_spaces(*s, &i);
-        if (!(*s)[i])
-            break ;
+		if (!(*s)[i])
+			break ;
 		next = get_next_token(*s, &i);
 		next->prev = prev;
 		if (prev)
@@ -231,10 +275,10 @@ void	get_tokens(t_mini *mini)
 	t_token	*token;
 
 	line = ft_strdup(mini->cmd_line);
-    if (!line)
-    {
-        return (print_error_no_exit(NULL, NULL, "Can`t allocate memory"));
-    }
+	if (!line)
+	{
+		return (print_error_no_exit(NULL, NULL, "Can`t allocate memory"));
+	}
 	line = add_spaces(line);
 	mini->start_tock = parse_str(&line, mini);
 	free(line);

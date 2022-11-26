@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:21:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 11:21:42 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 05:34:57 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_close(int fd)
 
 void	reset_std(t_mini *mini)
 {
-	dup2(mini->in, STDIN);
-	dup2(mini->out, STDOUT);
+	dup2(mini->stdin, STDIN);
+	dup2(mini->stdout, STDOUT);
 }
 
 void	close_fds(t_mini *mini)

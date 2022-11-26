@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:50:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:35:41 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:42:26 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**copy_env(t_var *mini_env)
 	return (env_copy);
 }
 
-void		sort_env(char **tab, int env_len)
+void	sort_env(char **tab, int env_len)
 {
 	int		ordered;
 	int		i;
@@ -106,7 +106,7 @@ void		sort_env(char **tab, int env_len)
 	}
 }
 
-void		print_sorted_env(t_mini *mini)
+void	print_sorted_env(t_mini *mini)
 {
 	int		i;
 	char	**tab;

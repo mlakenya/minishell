@@ -6,17 +6,11 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 22:30:00 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:37:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 06:26:46 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_error(char *error)
-{
-	write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
-}
 
 int	check_errors(t_token *token)
 {
@@ -24,67 +18,42 @@ int	check_errors(t_token *token)
 
 	if (!token->next)
 	{
-		ft_error("zsh: parse error near \'\n\'");
+		ft_putendl_fd("zsh: parse error near \'\n\'", STDERR);
 		return (1);
 	}
-	if (token->next->type != ARG)
+	if (token->next->type != CMD)
 	{
 		s = ft_strjoin("zsh: parse error near ", token->next->val);
-		ft_error(s);
+		ft_putendl_fd(s, STDERR);
 		free(s);
 		return (1);
 	}
 	return (0);
 }
 
-int	get_next(t_token *token, char **s)
+int	heredoc(t_token *token, t_mini *mini)
 {
+	int		fd;
 	char	*new_s;
-	char	*tmp;
-
-	new_s = readline(">");
-	if (!new_s || !new_s[0])
-		return (1);
-	if (ft_strncmp(new_s, token->next->val, 1024) == 0)
-	{
-		free(new_s);
-		return (0);
-	}
-	if (*s)
-	{
-		tmp = *s;
-		*s = ft_strjoin(*s, new_s);
-		free(new_s);
-		free(tmp);
-		tmp = *s;
-		*s = ft_strjoin(*s, "\n");
-		free(tmp);
-	}
-	else
-		*s = new_s;
-	return (1);
-}
-
-t_token	*heredoc(t_token *token)
-{
-	char	*s;
-	t_token	*new;
 
 	if (check_errors(token))
-		return (NULL);
-	s = NULL;
-	while (get_next(token, &s))
-		;
-	new = create_token(s);
-	if (token->prev)
-		token->prev->next = new;
-	new->prev = token->prev;
-	if (token->next->next)
-		token->next->next->prev = new;
-	new->next = token->next->next;
-	delete_token(token->next);
-	delete_token(token);
-	return (new);
+		return (0);
+	fd = open(mini->hd_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+	while (1)
+	{
+		new_s = readline(">");
+		if (!new_s || !new_s[0])
+			continue ;
+		if (ft_strncmp(new_s, token->next->val, 1024) == 0)
+		{
+			free(new_s);
+			break ;
+		}
+		ft_putendl_fd(new_s, fd);
+		free(new_s);
+	}
+	ft_close(fd);
+	return (1);
 }
 
 int	handle_heredocs(t_mini *mini)
@@ -96,9 +65,7 @@ int	handle_heredocs(t_mini *mini)
 	{
 		if (token->type == HEREDOC)
 		{
-			token = heredoc(token);
-			if (!token)
-				return (0);
+			return (heredoc(token, mini));
 		}
 		token = token->next;
 	}

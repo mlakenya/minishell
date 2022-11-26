@@ -6,13 +6,13 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:34:41 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:50:17 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int			error_message(char *path)
+int	error_message(char *path)
 {
 	DIR	*folder;
 	int	fd;
@@ -40,7 +40,7 @@ int			error_message(char *path)
 	return (ret);
 }
 
-int			magic_box(char *path, char **args, t_var *env, t_mini *mini)
+int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 {
 	char	**env_array;
 	int		ret;
@@ -55,17 +55,20 @@ int			magic_box(char *path, char **args, t_var *env, t_mini *mini)
 		ret = error_message(path);
 		free_array((void **)env_array);
 		clear_tokens(mini);
-		return (ret);
+		exit(ret);
 	}
 	else
 		waitpid(g_signals.pid, &ret, 0);
 	if (g_signals.sigint == 1)
 		return (g_signals.exit_status);
-	ret = (ret == 32256 || ret == 32512) ? ret / 256 : !!ret;
+	if (ret == 32256 || ret == 32512)
+		ret = ret / 256;
+	else
+		ret = !!ret;
 	return (ret);
 }
 
-char		*path_join(const char *s1, const char *s2)
+char	*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -76,7 +79,7 @@ char		*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-char		*check_dir(char *bin, char *command)
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -86,16 +89,18 @@ char		*check_dir(char *bin, char *command)
 	folder = opendir(bin);
 	if (!folder)
 		return (NULL);
-	while ((item = readdir(folder)))
+	item = readdir(folder);
+	while (item)
 	{
 		if (ft_strncmp(item->d_name, command, 1024) == 0)
 			path = path_join(bin, item->d_name);
+		item = readdir(folder);
 	}
 	closedir(folder);
 	return (path);
 }
 
-int			exec_bin(char **args, t_var *env, t_mini *mini)
+int	exec_bin(char **args, t_var *env, t_mini *mini)
 {
 	int		i;
 	char	**bin;

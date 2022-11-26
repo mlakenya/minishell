@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 23:17:47 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/19 19:08:12 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/25 22:52:09 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	is_determinator(char *s, int i)
 	if (s[i] == '$')
 		return (1);
 	if (s[i] == '|')
+		return (1);
+	if (s[i] == '\"')
 		return (1);
 	return (0);
 }

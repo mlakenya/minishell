@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:37:29 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 06:31:04 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 	pipe = 0;
 	if (is_type(prev, TRUNC))
 		redir(mini, token, TRUNC);
+	if (is_type(prev, HEREDOC))
+		input(mini, token, HEREDOC);
 	else if (is_type(prev, APPEND))
 		redir(mini, token, APPEND);
 	else if (is_type(prev, INPUT))
-		input(mini, token);
+		input(mini, token, INPUT);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(mini);
 	if (next && pipe != 1)

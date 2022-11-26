@@ -6,13 +6,13 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:37:22 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 04:39:43 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		is_builtin(char *command)
+int	is_builtin(char *command)
 {
 	if (ft_strncmp(command, "echo", 5) == 0)
 		return (1);
@@ -29,13 +29,13 @@ int		is_builtin(char *command)
 	return (0);
 }
 
-int		exec_builtin(char **args, t_mini *mini)
+int	exec_builtin(char **args, t_mini *mini)
 {
 	int		result;
 
 	result = 0;
 	if (ft_strncmp(args[0], "echo", 4) == 0)
-		result = ft_echo(args);
+		result = ft_echo(args, mini);
 	if (ft_strncmp(args[0], "cd", 2) == 0)
 		result = ft_cd(args, mini);
 	if (ft_strncmp(args[0], "pwd", 3) == 0)

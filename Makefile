@@ -6,7 +6,7 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 15:36:00 by mlakenya          #+#    #+#              #
-#    Updated: 2022/11/21 11:50:54 by mlakenya         ###   ########.fr        #
+#    Updated: 2022/11/26 06:20:11 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME	= minishell
 
 HEDEAR	= includes/minishell.h gnl/get_next_line.h
 
-PARSING	= parsing utils utils2 heredoc line_check 
+PARSING	= parsing utils utils2 line_check 
 
 HISTORY = history
 
-HEREDOC = heredoc_utils
+HEREDOC = heredoc_utils heredoc
 
 FREEERR = error free
 

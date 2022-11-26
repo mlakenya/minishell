@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:27:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:52:40 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/26 02:47:24 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,38 @@ t_var	*add_var(t_var *lst, char *name, char *value)
 	return (temp);
 }
 
-void    del_var_by_name(t_mini *mini, char *for_del)
+void	del_var_by_name(t_mini *mini, char *for_del)
 {
 	t_var	*next;
-    t_var   *prev;
+	t_var	*prev;
 
-    prev = NULL;
-    next = mini->variables;
-    while (next)
-    {
-        if (ft_strncmp(next->name, for_del, 1024) == 0)
-        {
-            if (prev)
-                prev->next = next->next;
-            free_env_node(next);
-            break ;
-        }
-        prev = next;
-        next = next->next;
-    }
-    next = mini->env;
-    while (next)
-    {
-        if (ft_strncmp(next->name, for_del, 1024) == 0)
-        {
-            if (prev)
-                prev->next = next->next;
-            free_env_node(next);
-            break ;
-        }
-        prev = next;
-        next = next->next;
-    }
+	prev = NULL;
+	next = mini->variables;
+	while (next)
+	{
+		if (ft_strncmp(next->name, for_del, 1024) == 0)
+		{
+			if (prev)
+				prev->next = next->next;
+			free_env_node(next);
+			break ;
+		}
+		prev = next;
+		next = next->next;
+	}
+	next = mini->env;
+	while (next)
+	{
+		if (ft_strncmp(next->name, for_del, 1024) == 0)
+		{
+			if (prev)
+				prev->next = next->next;
+			free_env_node(next);
+			break ;
+		}
+		prev = next;
+		next = next->next;
+	}
 }
 
 int	add_or_replace_var(char *name, char *value, t_mini *mini)
