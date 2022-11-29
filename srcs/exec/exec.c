@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 06:31:04 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:08:54 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**cmd_tab(t_token *start)
 	return (tab);
 }
 
-int		has_pipe(t_token *token)
+int	has_pipe(t_token *token)
 {
 	while (token)
 	{
@@ -61,7 +61,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		return ;
 	cmd = cmd_tab(token);
 	if (cmd && ft_strncmp(cmd[0], "exit", 5) == 0
-			&& has_pipe(token) == 0)
+		&& has_pipe(token) == 0)
 		mini_exit(mini, cmd);
 	else if (cmd && is_builtin(cmd[0]))
 		mini->ret = exec_builtin(cmd, mini);

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:12:15 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 05:01:55 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:51:27 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_echo(char **args, t_mini *mini)
 	int		fd;
 
 	fd = 1;
-	if (mini->fdin != -1)
+	if (mini->fdout != -1)
 		fd = mini->fdout;
 	i = 1;
 	if (nb_args(args) > 1)

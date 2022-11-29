@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:32:12 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 14:15:28 by renstein         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:11:24 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,6 @@ void	free_env_node(t_var *node)
 	}
 }
 
-int	free_env_list(t_var *head)
-{
-	t_var	*tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free_env_node(tmp);
-	}
-	return (0);
-}
-
 int	free_mini_list(t_var *head)
 {
 	t_var	*tmp;
@@ -48,18 +35,6 @@ int	free_mini_list(t_var *head)
 		free_env_node(tmp);
 	}
 	return (0);
-}
-
-void	free_mini_node(t_var *node)
-{
-	if (node)
-	{
-		if (node->name)
-			free(node->name);
-		if (node->value)
-			free(node->value);
-		free(node);
-	}
 }
 
 void	free_hist_node(t_hist *node)

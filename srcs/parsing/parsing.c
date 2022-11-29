@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 01:34:09 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:05:22 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ void	squish_args(t_mini *mini)
 	while (token)
 	{
 		prev = prev_sep(token, 0);
-		if (token->type == ARG && prev && (prev->type == TRUNC
-				|| prev->type == APPEND || prev->type == INPUT))
+		if (token->type == ARG && prev && !is_types(token->prev, "TAI")
+			&& (prev->type == TRUNC || prev->type == APPEND
+				|| prev->type == INPUT))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
@@ -170,13 +171,13 @@ void	arg_type(t_token *token)
 		token->type = HEREDOC;
 	else if (ft_strncmp(token->val, "|", 2) == 0)
 		token->type = PIPE;
-	else if (token->prev == NULL || token->prev->type >= TRUNC)
+	else if (token->prev == NULL || token->prev->type == PIPE)
 		token->type = CMD;
 	else
 		token->type = ARG;
 }
 
-int		next_alloc(char *line, int *i)
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;

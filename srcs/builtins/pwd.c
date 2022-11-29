@@ -6,13 +6,13 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:33:57 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 09:34:26 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:05:34 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];
 

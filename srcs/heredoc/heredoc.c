@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 22:30:00 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 06:26:46 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:46:04 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_errors(t_token *token)
 		ft_putendl_fd("zsh: parse error near \'\n\'", STDERR);
 		return (1);
 	}
-	if (token->next->type != CMD)
+	if (token->next->type != ARG)
 	{
 		s = ft_strjoin("zsh: parse error near ", token->next->val);
 		ft_putendl_fd(s, STDERR);

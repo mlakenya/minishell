@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 06:31:23 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:12:07 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_hist
 	struct s_hist	*prev;
 }	t_hist;
 
-typedef struct	s_expansions
+typedef struct s_expansions
 {
 	char			*new_arg;
 	int				i;
@@ -136,7 +136,7 @@ int			replace_variables(char **s, t_mini *m);
 t_var		*init_var(void);
 t_var		*find_variable(char *s, t_mini *m, int len);
 void		clear_variables(t_mini *mini);
-void        del_var_by_name(t_mini *mini, char *for_del);
+void		del_var_by_name(t_mini *mini, char *for_del);
 
 /*
  * token
@@ -169,10 +169,10 @@ void		loop_read(t_mini *mini);
 /*
  * free
 */
-int			free_env_list(t_var *head);
 int			free_minishell(t_mini *minishell);
 char		**free_array(void **array);
-void	    free_env_node(t_var *node);
+int			free_mini_list(t_var *head);
+void		free_env_node(t_var *node);
 
 /*
  * env
@@ -213,28 +213,28 @@ int			handle_heredocs(t_mini *mini);
 /*
  * exec 
 */
-void	redir(t_mini *mini, t_token *token, int type);
-void	input(t_mini *mini, t_token *token, int type);
-int		minipipe(t_mini *mini);
-void	minishell(t_mini *mini);
-void	ft_close(int fd);
-void	reset_std(t_mini *mini);
-void	close_fds(t_mini *mini);
-void	reset_fds(t_mini *mini);
-int		exec_bin(char **args, t_var *env, t_mini *mini);
+void		redir(t_mini *mini, t_token *token, int type);
+void		input(t_mini *mini, t_token *token, int type);
+int			minipipe(t_mini *mini);
+void		minishell(t_mini *mini);
+void		ft_close(int fd);
+void		reset_std(t_mini *mini);
+void		close_fds(t_mini *mini);
+void		reset_fds(t_mini *mini);
+int			exec_bin(char **args, t_var *env, t_mini *mini);
 
 /*
  * builtins 
 */
-int		is_builtin(char *command);
-int		exec_builtin(char **args, t_mini *mini);
-void	mini_exit(t_mini *mini, char **cmd);
-int		ft_echo(char **args, t_mini *mini);
-int		ft_export(char **args, t_var *env, t_mini *mini);
-int		ft_cd(char **args, t_mini *mini);
-int		ft_env(t_var *env);
-int		ft_pwd(void);
-int		ft_unset(char **args, t_mini *mini);
+int			is_builtin(char *command);
+int			exec_builtin(char **args, t_mini *mini);
+void		mini_exit(t_mini *mini, char **cmd);
+int			ft_echo(char **args, t_mini *mini);
+int			ft_export(char **args, t_var *env, t_mini *mini);
+int			ft_cd(char **args, t_mini *mini);
+int			ft_env(t_var *env);
+int			ft_pwd(void);
+int			ft_unset(char **args, t_mini *mini);
 
-extern t_sig g_signals;
+extern t_sig	g_signals;
 #endif

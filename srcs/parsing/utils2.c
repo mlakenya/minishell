@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:09:23 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 03:36:22 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:09:10 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_putstr2_fd(char *s1, char *s2, int fd)
 	ft_putstr_fd(s2, fd);
 }
 
-int		is_type(t_token *token, int type)
+int	is_type(t_token *token, int type)
 {
 	if (token && token->type == type)
 		return (1);
@@ -26,7 +26,7 @@ int		is_type(t_token *token, int type)
 		return (0);
 }
 
-int		is_types(t_token *token, char *types)
+int	is_types(t_token *token, char *types)
 {
 	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
 		return (1);

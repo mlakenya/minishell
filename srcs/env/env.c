@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:29:14 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 13:48:20 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:10:31 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_var	*save_env(char **env)
 			continue ;
 		node_env = init_node_mini_env(env[i]);
 		if (!node_env)
-			if (!free_env_list(mini_env))
+			if (!free_mini_list(mini_env))
 				return (NULL);
 		add_env_end(&mini_env, &node_env, &node_last);
 		i++;

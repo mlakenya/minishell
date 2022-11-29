@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:41:32 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:35:47 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:08:35 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	increase_shlvl(t_mini *minishell)
 	}
 }
 
-int		is_valid_env(const char *env)
+int	is_valid_env(const char *env)
 {
 	int		i;
 
