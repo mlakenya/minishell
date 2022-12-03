@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:07:24 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:05:43 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	free_tocken_add_history(t_mini *minishell)
 {
 	clear_tokens(minishell);
 	minishell->start_tock = NULL;
-	add_history_list(minishell, minishell->cmd_line);
-	add_history(minishell->cmd_line);
+	if (minishell->cmd_line)
+	{
+		add_history_list(minishell, minishell->cmd_line);
+		add_history(minishell->cmd_line);
+	}
 	minishell->cmd_line = NULL;
 }
 
@@ -35,8 +38,6 @@ void	loop_read(t_mini *mini)
 	while (1)
 	{
 		sig_init();
-		signal(SIGINT, &sigint);
-		signal(SIGQUIT, &sigquit);
 		line = readline("minishell$ ");
 		if (!line)
 			print_error_exit(mini, NULL, NULL, strerror(errno));
@@ -50,10 +51,7 @@ void	loop_read(t_mini *mini)
 					minishell(mini);
 			}
 			else
-			{
-				print_error(mini->err_msg);
-				mini->err_msg = NULL;
-			}
+				print_error_no_exit(NULL, NULL, mini->err_msg);
 			free_tocken_add_history(mini);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:09:23 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:09:10 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 15:38:07 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,26 @@ int	is_types(t_token *token, char *types)
 	else if (ft_strchr(types, 'P') && is_type(token, PIPE))
 		return (1);
 	return (0);
+}
+
+int	count_seps(char *s)
+{
+	int	seps;
+	int	i;
+
+	seps = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (is_separator(s, i))
+			seps++;
+		i++;
+	}
+	return (seps);
+}
+
+void	first_token(t_token **token)
+{
+	while (*token && (*token)->prev)
+		(*token) = (*token)->prev;
 }

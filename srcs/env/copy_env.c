@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:50:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 02:42:26 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:31:40 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,18 +110,26 @@ void	print_sorted_env(t_mini *mini)
 {
 	int		i;
 	char	**tab;
+	char	**tab_var;
 	t_var	*env;
 
 	env = mini->env;
 	tab = copy_env(env);
+	tab_var = copy_env(mini->variables->next);
 	sort_env(tab, env_list_len(env));
+	sort_env(tab_var, env_list_len(mini->variables->next));
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 	{
 		write(1, "declare -x ", 11);
-		write(1, tab[i], ft_strlen(tab[i]));
-		write(1, "\n", 1);
+		ft_putendl_fd(tab[i], 1);
 		i++;
 	}
-	clear_tokens(mini);
+	i = 0;
+	while (tab_var && tab_var[i])
+	{
+		write(1, "declare -x ", 11);
+		ft_putendl_fd(tab_var[i], 1);
+		i++;
+	}
 }

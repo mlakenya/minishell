@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:18:19 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 04:24:33 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:13:17 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ static int	update_pwd(t_mini *mini, int old)
 	return (SUCCESS);
 }
 
+static int	go_to_old_pwd(t_mini *mini, char **env_path)
+{
+	t_var	*var;
+
+	var = find_variable("OLDPWD", mini, 10000000);
+	if (!var)
+		ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR);
+	if (!var)
+		return (ERROR);
+	update_pwd(mini, 1);
+	*env_path = var->value;
+	return (0);
+}
+
 static int	go_to_path(int option, t_mini *mini)
 {
 	int		ret;
@@ -60,19 +74,12 @@ static int	go_to_path(int option, t_mini *mini)
 			return (ERROR);
 		env_path = var->value;
 	}
-	else if (option == 1)
-	{
-		var = find_variable("OLDPWD", mini, 10000000);
-		if (!var)
-			ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR);
-		if (!var)
-			return (ERROR);
-		update_pwd(mini, 1);
-		env_path = var->value;
-	}
+	else if (option == 1 && go_to_old_pwd(mini, &env_path) == ERROR)
+		return (ERROR);
 	ret = chdir(env_path);
 	update_pwd(mini, 0);
-	free(env_path);
+	if (env_path)
+		free(env_path);
 	return (ret);
 }
 

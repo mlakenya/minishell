@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:12:15 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 14:51:27 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 13:57:45 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static	int	nb_args(char **args)
 
 static	int	has_n_option(char **args, int *i)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	while (args[*i] && ft_strncmp(args[*i], "-n", 2) == 0)

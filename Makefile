@@ -6,7 +6,7 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 15:36:00 by mlakenya          #+#    #+#              #
-#    Updated: 2022/11/26 06:20:11 by mlakenya         ###   ########.fr        #
+#    Updated: 2022/12/03 17:56:48 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= minishell
 
 HEDEAR	= includes/minishell.h gnl/get_next_line.h
 
-PARSING	= parsing utils utils2 line_check 
+PARSING	= parsing utils utils2 line_check args
 
 HISTORY = history
 
@@ -24,7 +24,7 @@ FREEERR = error free
 
 ENV     = copy_env env shlvl
 
-VARS	= variables variables2
+VARS	= variables variables2 del_variable_by_name
 
 COMMON	= signal token init loop_read
 
@@ -52,7 +52,7 @@ OBJ		= $(SRCS:%.c=%.o)
 
 LIBFT	= -L libft -lft
 
-READL	= -lreadline
+READL	= -ltermcap -lreadline
 
 GCC		= gcc
 

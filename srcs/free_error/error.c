@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:59 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/20 18:28:16 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:50:36 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	print_error_no_exit(char *name, char *flag, char *err)
 		ft_putstr2_fd(name, ": ", STDERR_FILENO);
 	if (flag)
 		ft_putstr2_fd(flag, ": ", STDERR_FILENO);
-	ft_putstr2_fd(err, "\n", STDERR_FILENO);
+	if (err)
+		ft_putstr2_fd(err, "\n", STDERR_FILENO);
 }
 
 void	print_error_exit(t_mini *minishell, char *name, char *flag, char *err)
@@ -43,9 +44,6 @@ void	init_error(t_mini *minishell)
 		if (!minishell->env)
 			print_error_exit(minishell, "Environment init: ",
 				"environment saving error: ", strerror(errno));
-		if (!minishell->env_str)
-			print_error_exit(minishell, "Environment init: ",
-				"environment copy error: ", strerror(errno));
 		if (!minishell->hist_file)
 			print_error_exit(minishell, "Environment init: ",
 				"history file error: ", strerror(errno));

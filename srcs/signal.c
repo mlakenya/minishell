@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/25 21:29:32 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:07:53 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sigquit(int code)
 		g_signals.exit_status = 131;
 	}
 	else
-		ft_putstr_fd("minishell$   \b\b", STDERR);
+		ft_putstr_fd("\b\b  \b\b", STDERR);
 	free(nbr);
 }
 
@@ -49,4 +49,6 @@ void	sig_init(void)
 	g_signals.sigint = 0;
 	g_signals.pid = 0;
 	g_signals.exit_status = 0;
+	signal(SIGINT, &sigint);
+	signal(SIGQUIT, &sigquit);
 }

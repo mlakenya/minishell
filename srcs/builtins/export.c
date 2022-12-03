@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 02:50:31 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:35:01 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,10 @@ int	is_in_env(t_var *env, char *args)
 	return (SUCCESS);
 }
 
-int	ft_export(char **args, t_var *env, t_mini *mini)
+int	ft_export(char **args, t_mini *mini)
 {
-	int		new_env;
 	int		error_ret;
 
-	new_env = 0;
 	if (!args[1])
 	{
 		print_sorted_env(mini);
@@ -104,14 +102,8 @@ int	ft_export(char **args, t_var *env, t_mini *mini)
 			error_ret = -3;
 		if (error_ret <= 0)
 			return (print_error(error_ret, args[1]));
-		if (error_ret == 2)
-			new_env = 1;
-		else
-			new_env = is_in_env(env, args[1]);
-		if (new_env == 0)
-		{
-			env_add(args[1], env);
-		}
+		if (error_ret != 2)
+			is_variable(args[1], mini);
 	}
 	return (SUCCESS);
 }

@@ -6,87 +6,70 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 20:04:57 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/10/25 20:06:23 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 12:33:18 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*shifter(char const *s, char c)
+static int	count_words(const char *str, char c)
 {
-	size_t	i;
-	char	*str;
+	int	i;
+	int	trigger;
 
-	str = (char *) s;
 	i = 0;
-	while (str[i] && str[i] == c)
-		i++;
-	return (&str[i]);
-}
-
-static void	puk(size_t *w, size_t *l, size_t *ll, char **ss)
-{
-	if (++(*w) && ll)
-		ll[*w - 1] = *l;
-	if (ss)
-		ss[*w - 1][*l] = '\0';
-	*l = 0;
-}
-
-static size_t	counter(char const *s, char c, size_t *ll, char **ss)
-{
-	size_t	i;
-	size_t	w;
-	size_t	l;
-	char	*str;
-
-	w = 0;
-	l = 0;
-	i = 0;
-	str = shifter(s, c);
-	while (str[i])
+	trigger = 0;
+	while (*str)
 	{
-		if (i && str[i - 1] != c && str[i] == c)
-			puk(&w, &l, ll, ss);
-		if (str[i++] != c)
-			if (++l && ss)
-				ss[w][l - 1] = str[i - 1];
+		if (*str != c && trigger == 0)
+		{
+			trigger = 1;
+			i++;
+		}
+		else if (*str == c)
+			trigger = 0;
+		str++;
 	}
-	if (i && str[i - 1] != c)
-		puk(&w, &l, ll, ss);
-	return (w);
+	return (i);
 }
 
-static void	*erase(char **ss, size_t i)
+static char	*word_dup(const char *str, int start, int finish)
 {
-	while (i)
-		free(ss[--i]);
-	free(ss);
-	return (NULL);
+	char	*word;
+	int		i;
+
+	i = 0;
+	word = malloc((finish - start + 1) * sizeof(char));
+	while (start < finish)
+		word[i++] = str[start++];
+	word[i] = '\0';
+	return (word);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**ss;
-	size_t	*ll;
-	size_t	w;
 	size_t	i;
+	size_t	j;
+	int		index;
+	char	**split;
 
-	if (!s)
-		return (NULL);
-	w = counter(s, c, NULL, NULL);
-	ll = malloc(sizeof(*ll) * w);
-	ss = malloc(sizeof(*ss) * counter(s, c, ll, NULL) + 1);
+	split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!s || !split)
+		return (0);
 	i = 0;
-	while (ss && ll && i < w)
+	j = 0;
+	index = -1;
+	while (i <= ft_strlen(s))
 	{
-		ss[i] = malloc(sizeof(*ss[i]) * (ll[i] + 1));
-		if (!(ss[i++]))
-			return (erase(ss, i - 1));
+		if (s[i] != c && index < 0)
+			index = i;
+		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		{
+			split[j++] = word_dup(s, index, i);
+			index = -1;
+		}
+		i++;
 	}
-	counter(s, c, NULL, ss);
-	if (ss)
-		ss[w] = NULL;
-	free(ll);
-	return (ss);
+	split[j] = 0;
+	return (split);
 }

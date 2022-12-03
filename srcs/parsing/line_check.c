@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:30:06 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 02:51:33 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 15:41:32 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 int	ft_is_space(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
+}
+
+int	quote_error(t_mini *minishell)
+{
+	minishell->err_msg = ft_strjoin("minishell: syntax error: ",
+			"unclosed quote");
+	if (!minishell->err_msg)
+		print_error_exit(minishell, NULL, NULL, strerror(errno));
+	return (1);
 }
 
 int	quote_error_check(t_mini *minishell)
@@ -41,13 +50,7 @@ int	quote_error_check(t_mini *minishell)
 		line++;
 	}
 	if (q_count == 1)
-	{
-		minishell->err_msg = ft_strjoin("minishell: syntax error: ",
-				"unclosed quote");
-		if (!minishell->err_msg)
-			print_error_exit(minishell, NULL, NULL, strerror(errno));
-		return (1);
-	}
+		return (quote_error(minishell));
 	return (0);
 }
 
@@ -77,4 +80,26 @@ int	check_line(t_token *token)
 		token = token->next;
 	}
 	return (1);
+}
+
+int	quotes(char *line, int index)
+{
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	while (line[i] && i != index)
+	{
+		if (quote == 0 && line[i] == '\"')
+			quote = 1;
+		else if (quote == 0 && line[i] == '\'')
+			quote = 2;
+		else if (quote == 1 && line[i] == '\"')
+			quote = 0;
+		else if (quote == 2 && line[i] == '\'')
+			quote = 0;
+		i++;
+	}
+	return (quote);
 }

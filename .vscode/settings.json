@@ -24,7 +24,10 @@
         "iosfwd": "c",
         "iostream": "c",
         "numeric": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "unordered_map": "c",
+        "initializer_list": "c",
+        "span": "c"
     },
     "files.autoSave": "afterDelay"
 }

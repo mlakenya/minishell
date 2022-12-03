@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:32:12 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:11:24 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/02 20:19:48 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,6 @@ int	free_minishell(t_mini *minishell)
 			clear_tokens(minishell);
 		if (minishell->history)
 			free_hist_list(minishell->history);
-		if (minishell->env_str)
-			free_array((void **)minishell->env_str);
-		if (minishell->path_array)
-			free_array((void **)minishell->path_array);
 		if (minishell->hist_file)
 			free(minishell->hist_file);
 		if (minishell->hd_file)
@@ -83,5 +79,6 @@ int	free_minishell(t_mini *minishell)
 			clear_variables(minishell);
 		free(minishell);
 	}
+	rl_clear_history();
 	return (0);
 }

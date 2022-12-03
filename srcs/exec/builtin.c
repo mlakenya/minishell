@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 04:39:43 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:00:44 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec_builtin(char **args, t_mini *mini)
 	if (ft_strncmp(args[0], "env", 3) == 0)
 		ft_env(mini->env);
 	if (ft_strncmp(args[0], "export", 6) == 0)
-		ft_export(args, mini->env, mini);
+		ft_export(args, mini);
 	if (ft_strncmp(args[0], "unset", 5) == 0)
 		ft_unset(args, mini);
 	return (result);

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:12:07 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 17:58:42 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ typedef struct s_mini
 	t_var		*variables;
 	t_var		*env;
 	t_hist		*history;
-	char		**env_str;
-	char		**path_array;
 	char		*err_msg;
 	char		*cmd_line;
 	char		*hist_file;
@@ -127,6 +125,11 @@ int			quote_error_check(t_mini *minishell);
 int			check_line(t_token *token);
 void		skip_spaces(char *str, int *i);
 int			is_determinator(char *s, int i);
+void		squish_args(t_mini *mini);
+void		arg_type(t_token *token);
+int			count_seps(char *s);
+void		first_token(t_token **token);
+int			quotes(char *line, int index);
 
 /*
  * variables
@@ -230,7 +233,7 @@ int			is_builtin(char *command);
 int			exec_builtin(char **args, t_mini *mini);
 void		mini_exit(t_mini *mini, char **cmd);
 int			ft_echo(char **args, t_mini *mini);
-int			ft_export(char **args, t_var *env, t_mini *mini);
+int			ft_export(char **args, t_mini *mini);
 int			ft_cd(char **args, t_mini *mini);
 int			ft_env(t_var *env);
 int			ft_pwd(void);

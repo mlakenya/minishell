@@ -6,22 +6,20 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:08:54 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:34:26 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**cmd_tab(t_token *start)
+char	**cmd_tab(t_token *start, int i)
 {
 	t_token	*token;
 	char	**tab;
-	int		i;
 
 	if (!start)
 		return (NULL);
 	token = start->next;
-	i = 2;
 	while (token && token->type < TRUNC)
 	{
 		token = token->next;
@@ -59,7 +57,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 
 	if (mini->charge == 0)
 		return ;
-	cmd = cmd_tab(token);
+	cmd = cmd_tab(token, 2);
 	if (cmd && ft_strncmp(cmd[0], "exit", 5) == 0
 		&& has_pipe(token) == 0)
 		mini_exit(mini, cmd);
@@ -122,10 +120,7 @@ void	minishell(t_mini *mini)
 		if (mini->last == 0)
 			mini->ret = status;
 		if (mini->parent == 0)
-		{
-			clear_tokens(mini);
-			exit(mini->ret);
-		}
+			print_error_exit(mini, NULL, NULL, NULL);
 		mini->no_exec = 0;
 		token = next_run(token, 1);
 	}
