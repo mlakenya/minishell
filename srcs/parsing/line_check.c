@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:30:06 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 15:36:20 by renstein         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:08:35 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	check_line(t_token *token)
 		if (is_types(token, "TAI")
 			&& (!token->next || is_types(token->next, "TAIPE")))
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR);
+			ft_putstr_fd("shell: syntax error near unexpected token `", STDERR);
 			if (token->next)
 				ft_putstr_fd(token->next->val, STDERR);
 			else
@@ -72,7 +72,7 @@ int	check_line(t_token *token)
 		if (is_types(token, "PE")
 			&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
 		{
-			ft_putstr_fd("minisell: syntax error near unexpected token `", STDERR);
+			ft_putstr_fd("shell: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->val, STDERR);
 			ft_putendl_fd("'", STDERR);
 			return (0);

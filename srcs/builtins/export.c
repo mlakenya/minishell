@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 20:35:01 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:04:41 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,60 +30,51 @@ static int	print_error(int error, const char *arg)
 	return (ERROR);
 }
 
-int	env_add(const char *value, t_var *env)
+int	add_or_replace_env(char *name, char *value, t_mini *mini)
 {
-	t_var	*new;
-	t_var	*tmp;
+	t_var	*var;
 
-	if (env && env->value == NULL)
+	var = find_variable(name, mini, ft_strlen(name));
+	if (var)
 	{
-		env->value = ft_strdup(value);
-		return (SUCCESS);
+		free(var->value);
+		free(name);
+		var->value = value;
+		return (1);
 	}
-	new = malloc(sizeof(t_var));
-	if (!(new))
+	var = mini->env;
+	var = add_var(var, name, value);
+	if (!var)
 		return (-1);
-	new->value = ft_strdup(value);
-	while (env && env->next && env->next->next)
-		env = env->next;
-	tmp = env->next;
-	env->next = new;
-	new->next = tmp;
-	return (SUCCESS);
+	return (1);
 }
 
-char	*get_env_name(char *dest, const char *src)
+int	env_add(const char *s, t_mini *mini)
 {
+	char	*name;
+	char	*value;
 	int		i;
 
+	if (!s || !ft_strchr(s, '='))
+		return (0);
 	i = 0;
-	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE)
+	while (s[i] && s[i] != ' ')
+		i++;
+	if (s[i] == ' ')
+		return (0);
+	name = malloc(strlen(s));
+	if (!name)
+		return (-1);
+	i = 0;
+	while (s[i] && s[i] != '=')
 	{
-		dest[i] = src[i];
+		name[i] = s[i];
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	is_in_env(t_var *env, char *args)
-{
-	char	var_name[BUFF_SIZE];
-	char	env_name[BUFF_SIZE];
-
-	get_env_name(var_name, args);
-	while (env && env->next)
-	{
-		get_env_name(env_name, env->value);
-		if (ft_strncmp(var_name, env_name, 1024) == 0)
-		{
-			free(env->value);
-			env->value = ft_strdup(args);
-			return (1);
-		}
-		env = env->next;
-	}
-	return (SUCCESS);
+	name[i] = 0;
+	i++;
+	value = ft_strdup(s + i);
+	return (add_or_replace_env(name, value, mini));
 }
 
 int	ft_export(char **args, t_mini *mini)
@@ -103,7 +94,7 @@ int	ft_export(char **args, t_mini *mini)
 		if (error_ret <= 0)
 			return (print_error(error_ret, args[1]));
 		if (error_ret != 2)
-			is_variable(args[1], mini);
+			env_add(args[1], mini);
 	}
 	return (SUCCESS);
 }

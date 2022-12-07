@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 17:58:42 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:03:11 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_var		*init_var(void);
 t_var		*find_variable(char *s, t_mini *m, int len);
 void		clear_variables(t_mini *mini);
 void		del_var_by_name(t_mini *mini, char *for_del);
+t_var		*add_var(t_var *lst, char *name, char *value);
 
 /*
  * token
