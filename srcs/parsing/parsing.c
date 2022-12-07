@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 19:12:20 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 15:41:21 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:26:44 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void	get_tokens(t_mini *mini)
 	char	*line;
 	t_token	*token;
 
+	if (g_signals.sigint)
+		mini->ret = g_signals.exit_status;
 	line = ft_strdup(mini->cmd_line);
 	if (!line)
 		return (print_error_no_exit(NULL, NULL, "Can`t allocate memory"));

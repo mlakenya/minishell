@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:04:41 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:23:37 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	env_add(const char *s, t_mini *mini)
 
 int	ft_export(char **args, t_mini *mini)
 {
-	int		error_ret;
+	int	error_ret;
+	int	i;
 
 	if (!args[1])
 	{
@@ -88,13 +89,18 @@ int	ft_export(char **args, t_mini *mini)
 	}
 	else
 	{
-		error_ret = is_valid_env(args[1]);
-		if (args[1][0] == '=')
-			error_ret = -3;
-		if (error_ret <= 0)
-			return (print_error(error_ret, args[1]));
-		if (error_ret != 2)
-			env_add(args[1], mini);
+		i = 1;
+		while (args[i])
+		{
+			error_ret = is_valid_env(args[i]);
+			if (args[i][0] == '=')
+				error_ret = -3;
+			if (error_ret <= 0)
+				return (print_error(error_ret, args[i]));
+			if (error_ret != 2)
+				env_add(args[i], mini);
+			i++;
+		}
 	}
 	return (SUCCESS);
 }

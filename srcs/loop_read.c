@@ -6,11 +6,20 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:05:12 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:26:40 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*handle_question(char *value, int len, t_mini *mini)
+{
+	if (len > 1)
+		len = 1;
+	if (ft_strncmp(value, "?", len + 1) == 0)
+		return (ft_itoa(mini->ret));
+	return (ft_strdup("\0"));
+}
 
 void	print_error(char *err)
 {
@@ -43,8 +52,6 @@ void	loop_read(t_mini *mini)
 			print_error_exit(mini, NULL, NULL, strerror(errno));
 		if (*line != '\0' && *line != '\n')
 		{
-			if (g_signals.sigint)
-				mini->ret = g_signals.exit_status;
 			mini->cmd_line = line;
 			if (!quote_error_check(mini))
 			{

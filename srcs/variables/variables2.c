@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:49:54 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/05 14:24:14 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:24:18 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,6 @@ char	*change_substr(char *src, char *rep, int st, int end)
 	ft_strlcpy(new + st, rep, ft_strlen(rep) + 1);
 	ft_strlcat(new + st + ft_strlen(rep), src + end, ft_strlen(src) - end + 2);
 	return (new);
-}
-
-char	*handle_question(char *value, int len, t_mini *mini)
-{
-	if (len > 1)
-		len = 1;
-	if (ft_strncmp(value, "?", len + 1) == 0)
-		return (ft_itoa(mini->ret));
-	return (ft_strdup("\0"));
 }
 
 int	replace(char **s, int *start, t_mini *mini)
