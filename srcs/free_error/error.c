@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:59 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:50:36 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:52:51 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_error_exit(t_mini *minishell, char *name, char *flag, char *err)
 {
 	int	exit_status;
 
-	exit_status = minishell->exit_status;
+	exit_status = minishell->ret;
 	print_error_no_exit(name, flag, err);
 	free_tocken_add_history(minishell);
 	append_history_file(minishell);

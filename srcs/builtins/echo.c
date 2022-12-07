@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:12:15 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 13:57:45 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/04 12:41:48 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	ft_echo(char **args, t_mini *mini)
 		{
 			ft_putstr_fd(args[i], fd);
 			if (args[i + 1] && args[i][0] != '\0')
-				write(1, " ", 1);
+				write(fd, " ", 1);
 			i++;
 		}
 	}
 	if (n_option == 0)
-		write(1, "\n", fd);
+		write(fd, "\n", 1);
 	return (SUCCESS);
 }

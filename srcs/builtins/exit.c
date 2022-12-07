@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 07:19:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 02:46:17 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:36:38 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	mini_exit(t_mini *mini, char **cmd)
 	{
 		mini->ret = 0;
 	}
-	exit(0);
+	exit(mini->ret);
 }

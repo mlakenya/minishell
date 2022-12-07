@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:07:53 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:52:24 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	sigint(int code)
 	else
 	{
 		ft_putstr_fd("\n", STDERR);
-		g_signals.exit_status = 130;
 	}
+	g_signals.exit_status = 130;
 	g_signals.sigint = 1;
 }
 

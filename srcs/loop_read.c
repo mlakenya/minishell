@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:05:43 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:42:17 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	loop_read(t_mini *mini)
 			print_error_exit(mini, NULL, NULL, strerror(errno));
 		if (*line != '\0' && *line != '\n')
 		{
+			if (g_signals.sigint)
+				mini->ret = g_signals.exit_status;
 			mini->cmd_line = line;
 			if (!quote_error_check(mini))
 			{
