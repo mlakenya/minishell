@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:34:26 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/03 19:19:37 by renstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 	next = next_sep(token, 0);
 	pipe = 0;
 	if (is_type(prev, TRUNC))
-		redir(mini, token, TRUNC);
+		redir(mini, token, TRUNC); // >
 	if (is_type(prev, HEREDOC))
-		input(mini, token, HEREDOC);
-	else if (is_type(prev, APPEND))
+		input(mini, token, HEREDOC); // << schitivaem
+	else if (is_type(prev, APPEND))  // >> zapic
 		redir(mini, token, APPEND);
-	else if (is_type(prev, INPUT))
+	else if (is_type(prev, INPUT)) // <
 		input(mini, token, INPUT);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(mini);
