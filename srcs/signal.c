@@ -17,13 +17,16 @@ void	sigint(int code)
 	(void)code;
 	if (g_signals.pid == 0)
 	{
-		ft_putstr_fd("\n", STDERR);
-		ft_putstr_fd("minishell$ ", STDERR);
+		;
 	}
 	else
 	{
 		ft_putstr_fd("\n", STDERR);
 	}
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 	g_signals.exit_status = 130;
 	g_signals.sigint = 1;
 }
