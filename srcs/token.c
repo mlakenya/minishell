@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 22:02:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/21 05:03:45 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:41:48 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_token	*next_run(t_token *token, int skip)
 	while (token && token->type != CMD)
 	{
 		token = token->next;
+		if (token && token->type == CMD)
+			token = token->next;
 	}
 	return (token);
 }
