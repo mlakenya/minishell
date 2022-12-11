@@ -6,16 +6,11 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:30:06 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:08:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/11 15:33:33 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_is_space(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
 
 int	quote_error(t_mini *minishell)
 {
@@ -54,19 +49,25 @@ int	quote_error_check(t_mini *minishell)
 	return (0);
 }
 
-int	check_line(t_token *token)
+void	print_err(t_token *token)
+{
+	ft_putstr_fd("shell: syntax error near unexpected token `", STDERR);
+	if (token->next)
+		ft_putstr_fd(token->next->val, STDERR);
+	else
+		ft_putstr_fd("newline", STDERR);
+	ft_putendl_fd("'", STDERR);
+}
+
+int	check_line(t_mini *mini, t_token *token)
 {
 	while (token)
 	{
 		if (is_types(token, "TAI")
 			&& (!token->next || is_types(token->next, "TAIPE")))
 		{
-			ft_putstr_fd("shell: syntax error near unexpected token `", STDERR);
-			if (token->next)
-				ft_putstr_fd(token->next->val, STDERR);
-			else
-				ft_putstr_fd("newline", STDERR);
-			ft_putendl_fd("'", STDERR);
+			print_err(token);
+			mini->ret = 258;
 			return (0);
 		}
 		if (is_types(token, "PE")
@@ -75,6 +76,7 @@ int	check_line(t_token *token)
 			ft_putstr_fd("shell: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->val, STDERR);
 			ft_putendl_fd("'", STDERR);
+			mini->ret = 258;
 			return (0);
 		}
 		token = token->next;

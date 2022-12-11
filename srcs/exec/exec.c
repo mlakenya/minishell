@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:06:45 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/11 15:01:16 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	minishell(t_mini *mini)
 	t_token	*token;
 	int		status;
 
+	sig_exec();
 	token = next_run(mini->start_tock, 0);
 	if (is_types(mini->start_tock, "TAI"))
 		token = mini->start_tock->next;

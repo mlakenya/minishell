@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:26:40 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/11 14:57:49 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	loop_read(t_mini *mini)
 	read_history_file(mini);
 	while (1)
 	{
-		sig_init();
+		sig_input();
 		line = readline("minishell$ ");
 		if (!line)
 			print_error_exit(mini, NULL, NULL, strerror(errno));
@@ -56,7 +56,7 @@ void	loop_read(t_mini *mini)
 			if (!quote_error_check(mini))
 			{
 				get_tokens(mini);
-				if (mini->start_tock && check_line(mini->start_tock))
+				if (mini->start_tock && check_line(mini, mini->start_tock))
 					minishell(mini);
 			}
 			else

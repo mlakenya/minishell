@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/26 02:50:17 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/09 12:37:06 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 	while (env && ft_strncmp(env->name, "PATH", 4) != 0)
 		env = env->next;
 	if (env == NULL || env->next == NULL)
-		return (magic_box(args[0], args, env, mini));
+		return (magic_box(args[0], args, mini->env, mini));
 	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
 		return (ERROR);
@@ -121,9 +121,9 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	if (path != NULL)
-		ret = magic_box(path, args, env, mini);
+		ret = magic_box(path, args, mini->env, mini);
 	else
-		ret = magic_box(args[0], args, env, mini);
+		ret = magic_box(args[0], args, mini->env, mini);
 	free_array((void **)bin);
 	free(path);
 	return (ret);
