@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 22:49:54 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:24:18 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:10:40 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,11 @@ int	replace(char **s, int *start, t_mini *mini)
 int	replace_variables(char **s, t_mini *m)
 {
 	int	i;
-	int	single_brac;
 
 	i = 0;
-	single_brac = 0;
 	while ((*s)[i])
 	{
-		if ((*s)[i] == '\'')
-			single_brac = !single_brac;
-		if ((*s)[i] == '$' && !single_brac)
+		if ((*s)[i] == '$' && quotes(*s, i) != 2)
 		{
 			if (!replace(s, &i, m))
 				return (0);

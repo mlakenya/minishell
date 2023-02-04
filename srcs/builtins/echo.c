@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:12:15 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/13 12:35:25 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:00:20 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_echo(char **args, t_mini *mini)
 	if (mini->fdout != -1)
 		fd = mini->fdout;
 	i = 1;
+	n_option = 0;
 	if (nb_args(args) > 1)
 	{
 		n_option = has_n_option(args, &i);

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 12:56:42 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:34:11 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ t_var		*init_node_mini_env(char *env);
 t_var		*find_list(t_var *mini_env, char *key);
 void		increase_shlvl(t_mini *minishell);
 void		remove_oldpwd_value(t_var *mini_env);
-char		**copy_env(t_var *mini_env);
+char		**copy_env(t_var *mini_env, int needQuotes);
 char		**save_path(t_var *mini_path);
 void		print_sorted_env(t_mini *mini);
 int			is_valid_env(const char *env);

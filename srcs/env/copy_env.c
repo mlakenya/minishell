@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:50:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:31:40 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:34:42 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	env_list_len(t_var *list)
 	return (len);
 }
 
-char	*strjoin_env(char const *s1, char const *s2)
+char	*strjoin_env(char const *s1, char const *s2, int needQuotes)
 {
 	char	*ptr;
 	char	*str;
@@ -43,18 +43,22 @@ char	*strjoin_env(char const *s1, char const *s2)
 		*ptr = '\0';
 		return (str);
 	}
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2 + needQuotes * 2));
 	str = ptr;
 	while (*s1 != '\0')
 		*ptr++ = *s1++;
 	*ptr++ = '=';
+	if (needQuotes)
+		*ptr++ = '"';
 	while (*s2 != '\0')
 		*ptr++ = *s2++;
+	if (needQuotes)
+		*ptr++ = '"';
 	*ptr = '\0';
 	return (str);
 }
 
-char	**copy_env(t_var *mini_env)
+char	**copy_env(t_var *mini_env, int needQuotes)
 {
 	t_var	*ptr_env;
 	char	**env_copy;
@@ -70,7 +74,7 @@ char	**copy_env(t_var *mini_env)
 	ptr_env = mini_env;
 	while (ptr_env)
 	{
-		env_copy[len] = strjoin_env(ptr_env->name, ptr_env->value);
+		env_copy[len] = strjoin_env(ptr_env->name, ptr_env->value, needQuotes);
 		if (!env_copy[len])
 			return (free_array((void **)env_copy));
 		ptr_env = ptr_env->next;
@@ -114,8 +118,8 @@ void	print_sorted_env(t_mini *mini)
 	t_var	*env;
 
 	env = mini->env;
-	tab = copy_env(env);
-	tab_var = copy_env(mini->variables->next);
+	tab = copy_env(env, 1);
+	tab_var = copy_env(mini->variables->next, 1);
 	sort_env(tab, env_list_len(env));
 	sort_env(tab_var, env_list_len(mini->variables->next));
 	i = 0;

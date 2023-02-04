@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 14:49:58 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:09:57 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 	g_signals.pid = fork();
 	if (g_signals.pid == 0)
 	{
-		env_array = copy_env(env);
+		env_array = copy_env(env, 0);
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, args, env_array);
 		ret = error_message(path);
@@ -40,10 +40,8 @@ int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 	}
 	if (g_signals.sigint || g_signals.sigquit)
 		return (g_signals.exit_status);
-	if (ret == 32256 || ret == 32512)
+	if (ret >= 256)
 		ret = ret / 256;
-	else
-		ret = !!ret;
 	return (ret);
 }
 
@@ -96,7 +94,7 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 	if (!args[0] && !bin[0])
 		return (ERROR);
 	i = 1;
-	path = check_dir(bin[0] + 5, args[0]);
+	path = check_dir(bin[0], args[0]);
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	free_array((void **)bin);
