@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 13:18:27 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:04:01 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	sig_input(void)
 	signal(SIGINT, &sigint_input);
 }
 
-void	sigquit()
+void	sigquit(void)
 {
 	ft_putstr_fd("Quit (core dumped)\n", STDERR);
 	g_signals.exit_status = 131;
 }
 
-void	sigint_exec()
+void	sigint_exec(void)
 {
 	write(1, "\n", 1);
 	g_signals.exit_status = 130;

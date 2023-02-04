@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 15:18:45 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:17:10 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	env_add(const char *s, t_mini *mini)
 	if (!s || !ft_strchr(s, '='))
 		return (0);
 	i = 0;
-	while (s[i] && s[i] != ' ')
+	while (s[i] && (s[i] != ' ' || quotes(s, i) == 0))
 		i++;
 	if (s[i] == ' ')
 		return (0);

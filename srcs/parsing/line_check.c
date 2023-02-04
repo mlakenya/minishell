@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:30:06 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/11 15:33:33 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:18:27 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_line(t_mini *mini, t_token *token)
 	return (1);
 }
 
-int	quotes(char *line, int index)
+int	quotes(const char *line, int index)
 {
 	int	i;
 	int	quote;

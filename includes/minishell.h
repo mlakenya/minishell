@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 15:34:11 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:18:39 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ typedef struct s_mini
 */
 void		sig_input(void);
 void		sig_exec(void);
-void		sigquit();
-void		sigint_exec();
+void		sigquit(void);
+void		sigint_exec(void);
 
 /*
  * parsing
@@ -131,7 +131,7 @@ void		squish_args(t_mini *mini);
 void		arg_type(t_token *token);
 int			count_seps(char *s);
 void		first_token(t_token **token);
-int			quotes(char *line, int index);
+int			quotes(const char *line, int index);
 
 /*
  * variables

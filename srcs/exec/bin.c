@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 16:09:57 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:05:06 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 	else
 	{
 		waitpid(g_signals.pid, &ret, 0);
+		ft_putstr2_fd(args[0], " ended!!!\n", 2);
 		if (ret == 2 && g_signals.sigint)
 			sigint_exec();
 		if (ret == 131 && g_signals.sigquit)
@@ -88,7 +89,13 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 	ret = UNKNOWN_COMMAND;
 	while (env && ft_strncmp(env->name, "PATH", 4) != 0)
 		env = env->next;
-	if (env == NULL || env->next == NULL)
+	if (env == NULL)
+	{
+		env = mini->variables;
+		while (env && ft_strncmp(env->name, "PATH", 4) != 0)
+			env = env->next;
+	}
+	if (env == NULL)
 		return (magic_box(args[0], args, mini->env, mini));
 	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
