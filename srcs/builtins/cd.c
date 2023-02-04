@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:18:19 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/13 12:25:17 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:56:23 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static int	go_to_old_pwd(t_mini *mini, char **env_path)
 		ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR);
 	if (!var)
 		return (ERROR);
+	*env_path = ft_strdup(var->value);
 	update_pwd(mini, 1);
-	*env_path = var->value;
 	return (0);
 }
 
@@ -87,9 +87,9 @@ int	ft_cd(char **args, t_mini *mini)
 {
 	int	cd_ret;
 
-	if (!args[1] || ft_strncmp(args[1], "--", 3) == 0)
+	if (!args[1] || ft_strncmp(args[1], "--", 100) == 0)
 		return (go_to_path(0, mini));
-	if (args[2])
+	if (args[1] && args[2])
 	{
 		print_error_no_exit(NULL, NULL, "minishell: cd: too many arguments");
 		return (ERROR);

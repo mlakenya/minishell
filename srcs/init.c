@@ -6,11 +6,24 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:06:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 12:35:14 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:47:06 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	init_oldpwd(t_mini *mini)
+{
+	t_var	*oldpwd;
+	t_var	*pwd;
+
+	oldpwd = find_variable("OLDPWD", mini, 100000);
+	if (oldpwd && oldpwd->value)
+		free(oldpwd->value);
+	pwd = find_variable("PWD", mini, 100000);
+	if (pwd)
+		oldpwd->value = ft_strdup(pwd->value);
+}
 
 t_mini	*init_mini(char **env)
 {
@@ -22,7 +35,7 @@ t_mini	*init_mini(char **env)
 	mini->variables = init_var();
 	mini->env = save_env(env);
 	increase_shlvl(mini);
-	del_var_by_name(mini, "OLDPWD");
+	init_oldpwd(mini);
 	mini->hist_file = get_hist_file_name(mini);
 	mini->hd_file = get_hd_file_name(mini);
 	mini->history = NULL;
