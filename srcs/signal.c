@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 17:04:01 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:41:14 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sigquit(void)
 
 void	sigint_exec(void)
 {
-	write(1, "\n", 1);
+	write(2, "\n", 1);
 	g_signals.exit_status = 130;
 }
 
