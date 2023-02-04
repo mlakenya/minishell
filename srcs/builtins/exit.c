@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 07:19:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/05 15:36:38 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:52:09 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ int	ft_strisnum(const char *str)
 			return (0);
 		i++;
 	}
+	if (ft_strncmp(str, "9223372036854775807", ft_strlen(str)) > 0)
+		return (0);
 	return (1);
 }
 
-void	mini_exit(t_mini *mini, char **cmd)
+void	mini_exit(t_mini *mini, char **cmd, int needToExit)
 {
-	write(1, "exit\n", 5);
-	free_tocken_add_history(mini);
-	append_history_file(mini);
-	free_minishell(mini);
-	if (cmd[1] && cmd[2])
+	if (cmd[1] && cmd[2] && ft_strisnum(cmd[1]) == 0)
 	{
 		mini->ret = 1;
+		ft_putstr_fd("exit\n", STDERR);
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR);
+		return ;
 	}
 	else if (cmd[1] && ft_strisnum(cmd[1]) == 0)
 	{
-		mini->ret = 255;
+		mini->ret = 2;
 		ft_putstr_fd("minishell: exit: ", STDERR);
 		ft_putstr_fd(cmd[1], STDERR);
 		ft_putendl_fd(": numeric argument required", STDERR);
@@ -51,8 +51,7 @@ void	mini_exit(t_mini *mini, char **cmd)
 	else if (cmd[1])
 		mini->ret = ft_atoi(cmd[1]);
 	else
-	{
 		mini->ret = 0;
-	}
-	exit(mini->ret);
+	if (needToExit)
+		print_error_exit(mini, NULL, NULL, "exit");
 }

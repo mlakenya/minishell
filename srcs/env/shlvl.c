@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:41:32 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/11/29 15:08:35 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:17:00 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int	is_valid_env(const char *env)
 	int		i;
 
 	i = 0;
-	if (ft_isdigit(env[i]) == 1)
+	if (ft_isdigit(env[i]) != 0)
 		return (0);
 	while (env[i] && env[i] != '=')
 	{
-		if (ft_isalnum(env[i]) == 0)
+		if (ft_isalnum(env[i]) == 0 && env[i] != '_')
 			return (-1);
 		i++;
 	}

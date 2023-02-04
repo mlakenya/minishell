@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/11 14:57:49 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:15:01 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*handle_question(char *value, int len, t_mini *mini)
 {
 	if (len > 1)
 		len = 1;
-	if (ft_strncmp(value, "?", len + 1) == 0)
+	if (*value == '?' && (!*(value + 1) || *(value + 1) == ' '))
 		return (ft_itoa(mini->ret));
 	return (ft_strdup("\0"));
 }

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:48:40 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/11 15:01:16 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:13:55 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	if (mini->charge == 0)
 		return ;
 	cmd = cmd_tab(token, 2);
-	if (cmd && ft_strncmp(cmd[0], "exit", 5) == 0
-		&& has_pipe(token) == 0)
-		mini_exit(mini, cmd);
+	if (cmd && ft_strncmp(cmd[0], "exit", 5) == 0)
+	{
+		if (has_pipe(mini->start_tock) == 0)
+			mini_exit(mini, cmd, 1);
+		else
+			mini_exit(mini, cmd, 0);
+	}
 	else if (cmd && is_builtin(cmd[0]))
 		mini->ret = exec_builtin(cmd, mini);
 	else if (cmd)

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/11 15:01:00 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:09:22 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void		init_error(t_mini *minishell);
 void		print_error_exit(t_mini *minishell,
 				char *name, char *flag, char *err);
 void		print_error_no_exit(char *name, char *flag, char *err);
+int			error_message(char *path);
 
 /*
  * init
@@ -232,11 +233,11 @@ int			exec_bin(char **args, t_var *env, t_mini *mini);
 */
 int			is_builtin(char *command);
 int			exec_builtin(char **args, t_mini *mini);
-void		mini_exit(t_mini *mini, char **cmd);
+void		mini_exit(t_mini *mini, char **cmd, int needToExit);
 int			ft_echo(char **args, t_mini *mini);
 int			ft_export(char **args, t_mini *mini);
 int			ft_cd(char **args, t_mini *mini);
-int			ft_env(t_var *env);
+int			ft_env(t_var *env, char **args);
 int			ft_pwd(void);
 int			ft_unset(char **args, t_mini *mini);
 

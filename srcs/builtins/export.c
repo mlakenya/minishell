@@ -6,27 +6,19 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:28:26 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/07 17:23:37 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:53:48 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	print_error(int error, const char *arg)
+static int	print_error(const char *arg)
 {
-	int		i;
+	char	*err;
 
-	if (error == -1)
-		ft_putstr_fd("export: not valid in this context: ", STDERR);
-	else if (error == 0 || error == -3)
-		ft_putstr_fd("export: not a valid identifier: ", STDERR);
-	i = 0;
-	while (arg[i] && (arg[i] != '=' || error == -3))
-	{
-		write(STDERR, &arg[i], 1);
-		i++;
-	}
-	write(STDERR, "\n", 1);
+	err = ft_strjoin("minishell: export: `", arg);
+	err = ft_strjoin(err, "' not a valid identifier\n");
+	write(STDERR, err, ft_strlen(err));
 	return (ERROR);
 }
 
@@ -96,7 +88,7 @@ int	ft_export(char **args, t_mini *mini)
 			if (args[i][0] == '=')
 				error_ret = -3;
 			if (error_ret <= 0)
-				return (print_error(error_ret, args[i]));
+				return (print_error(args[i]));
 			if (error_ret != 2)
 				env_add(args[i], mini);
 			i++;

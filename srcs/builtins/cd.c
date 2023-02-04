@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 08:18:19 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/03 14:13:17 by mlakenya         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:25:17 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int	ft_cd(char **args, t_mini *mini)
 
 	if (!args[1] || ft_strncmp(args[1], "--", 3) == 0)
 		return (go_to_path(0, mini));
+	if (args[2])
+	{
+		print_error_no_exit(NULL, NULL, "minishell: cd: too many arguments");
+		return (ERROR);
+	}
 	if (ft_strncmp(args[1], "-", 2) == 0)
 		cd_ret = go_to_path(1, mini);
 	else

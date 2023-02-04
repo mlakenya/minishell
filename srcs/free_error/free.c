@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:32:12 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/02 20:19:48 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:55:05 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ int	free_minishell(t_mini *minishell)
 {
 	if (minishell)
 	{
+		close_fds(minishell);
+		ft_close(minishell->stdin);
+		ft_close(minishell->stdout);
 		if (minishell->env)
 			free_mini_list(minishell->env);
 		if (minishell->start_tock)

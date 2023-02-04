@@ -6,39 +6,11 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/09 12:37:06 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:54:32 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	error_message(char *path)
-{
-	DIR	*folder;
-	int	fd;
-	int	ret;
-
-	fd = open(path, O_WRONLY);
-	folder = opendir(path);
-	ft_putstr_fd("minishell: ", STDERR);
-	ft_putstr_fd(path, STDERR);
-	if (ft_strchr(path, '/') == NULL)
-		ft_putendl_fd(": command not found", STDERR);
-	else if (fd == -1 && folder == NULL)
-		ft_putendl_fd(": No such file or directory", STDERR);
-	else if (fd == -1 && folder != NULL)
-		ft_putendl_fd(": is a directory", STDERR);
-	else if (fd != -1 && folder == NULL)
-		ft_putendl_fd(": Permission denied", STDERR);
-	if (ft_strchr(path, '/') == NULL || (fd == -1 && folder == NULL))
-		ret = UNKNOWN_COMMAND;
-	else
-		ret = IS_DIRECTORY;
-	if (folder)
-		closedir(folder);
-	ft_close(fd);
-	return (ret);
-}
 
 int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 {
@@ -53,8 +25,9 @@ int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, args, env_array);
 		ret = error_message(path);
+		free_array((void **)args);
 		free_array((void **)env_array);
-		clear_tokens(mini);
+		free_minishell(mini);
 		exit(ret);
 	}
 	else
@@ -120,11 +93,11 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 	path = check_dir(bin[0] + 5, args[0]);
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
+	free_array((void **)bin);
 	if (path != NULL)
 		ret = magic_box(path, args, mini->env, mini);
 	else
 		ret = magic_box(args[0], args, mini->env, mini);
-	free_array((void **)bin);
 	free(path);
 	return (ret);
 }
