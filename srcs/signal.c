@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:59:43 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/11 15:29:16 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:18:27 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,6 @@ void	sigint_input(int code)
 	g_signals.exit_status = 130;
 }
 
-void	sigint_exec(int code)
-{
-	(void)code;
-	write(1, "\n", 1);
-	g_signals.exit_status = 130;
-	g_signals.sigint = 1;
-}
-
-void	sigquit(int code)
-{
-	char	*nbr;
-
-	nbr = ft_itoa(code);
-	ft_putstr_fd("Quit: ", STDERR);
-	ft_putendl_fd(nbr, STDERR);
-	g_signals.exit_status = 131;
-	free(nbr);
-}
-
 void	sig_input(void)
 {	
 	g_signals.sigint = 0;
@@ -50,11 +31,36 @@ void	sig_input(void)
 	signal(SIGINT, &sigint_input);
 }
 
+void	sigquit()
+{
+	ft_putstr_fd("Quit (core dumped)\n", STDERR);
+	g_signals.exit_status = 131;
+}
+
+void	sigint_exec()
+{
+	write(1, "\n", 1);
+	g_signals.exit_status = 130;
+}
+
+void	sigint_exec_init(int code)
+{
+	(void)code;
+	g_signals.sigint = 1;
+}
+
+void	sigquit_exec_init(int code)
+{
+	(void)code;
+	g_signals.sigquit = 1;
+}
+
 void	sig_exec(void)
 {	
 	g_signals.sigint = 0;
+	g_signals.sigquit = 0;
 	g_signals.exit_status = 0;
 	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, sigquit);
-	signal(SIGINT, &sigint_exec);
+	signal(SIGQUIT, sigquit_exec_init);
+	signal(SIGINT, sigint_exec_init);
 }

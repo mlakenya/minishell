@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/03 21:54:32 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:49:58 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,14 @@ int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
 		exit(ret);
 	}
 	else
+	{
 		waitpid(g_signals.pid, &ret, 0);
-	if (g_signals.sigint == 1)
+		if (ret == 2 && g_signals.sigint)
+			sigint_exec();
+		if (ret == 131 && g_signals.sigquit)
+			sigquit();
+	}
+	if (g_signals.sigint || g_signals.sigquit)
 		return (g_signals.exit_status);
 	if (ret == 32256 || ret == 32512)
 		ret = ret / 256;

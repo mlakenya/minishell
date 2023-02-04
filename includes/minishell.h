@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/13 18:09:22 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:56:42 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 typedef struct s_sig
 {
 	int				sigint;
+	int				sigquit;
 	int				exit_status;
 	pid_t			pid;
 }				t_sig;
@@ -114,6 +115,8 @@ typedef struct s_mini
 */
 void		sig_input(void);
 void		sig_exec(void);
+void		sigquit();
+void		sigint_exec();
 
 /*
  * parsing

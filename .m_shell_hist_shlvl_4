@@ -67,3 +67,15 @@ echo "cat lol.c  lol.c"
 '$file'
 echo '$USER'
 cat 'rtr rtgrr'
+./minishell 
+echo $?
+grep a
+echo $?
+grep a
+echo $?
+./minishell 
+grep a
+./minishell 
+echo $?
+~
+exit
