@@ -6,30 +6,37 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 04:58:11 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 21:46:07 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:32:39 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
+void	execute(char *path, char **args, t_var *env, t_mini *mini)
 {
 	char	**env_array;
+	int		ret;
+
+	ft_close(mini->stdin);
+	ft_close(mini->stdout);
+	env_array = copy_env(env, 0);
+	if (ft_strchr(path, '/') != NULL)
+		execve(path, args, env_array);
+	ret = error_message(path);
+	free_array((void **)args);
+	free_array((void **)env_array);
+	free_minishell(mini);
+	exit(ret);
+}
+
+int	magic_box(char *path, char **args, t_var *env, t_mini *mini)
+{
 	int		ret;
 
 	ret = SUCCESS;
 	g_signals.pid = fork();
 	if (g_signals.pid == 0)
-	{
-		env_array = copy_env(env, 0);
-		if (ft_strchr(path, '/') != NULL)
-			execve(path, args, env_array);
-		ret = error_message(path);
-		free_array((void **)args);
-		free_array((void **)env_array);
-		free_minishell(mini);
-		exit(ret);
-	}
+		execute(path, args, env, mini);
 	else
 	{
 		waitpid(g_signals.pid, &ret, 0);
@@ -86,14 +93,7 @@ int	exec_bin(char **args, t_var *env, t_mini *mini)
 
 	i = 0;
 	ret = UNKNOWN_COMMAND;
-	while (env && ft_strncmp(env->name, "PATH", 4) != 0)
-		env = env->next;
-	if (env == NULL)
-	{
-		env = mini->variables;
-		while (env && ft_strncmp(env->name, "PATH", 4) != 0)
-			env = env->next;
-	}
+	env = find_variable("PATH", mini, 100000);
 	if (env == NULL)
 		return (magic_box(args[0], args, mini->env, mini));
 	bin = ft_split(env->value, ':');

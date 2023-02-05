@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 07:19:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 21:48:06 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:14:20 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	ft_strisnum(const char *str)
 			return (0);
 		i++;
 	}
-	if (ft_strlen(str) > 19 || ft_strncmp(str, "9223372036854775807", 10000000) > 0)
+	if (ft_strlen(str) > 19
+		|| ft_strncmp(str, "9223372036854775807", 10000000) > 0)
 		return (0);
 	if (str[0] == '-' && ft_strncmp(str + 1, "9223372036854775808", 100000) > 0)
 		return (0);

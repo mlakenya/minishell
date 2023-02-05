@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:57:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2022/12/02 20:14:05 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:18:24 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	mini = init_mini(env);
 	init_error(mini);
-	loop_read(mini);
+	loop_read(mini, NULL);
 	return (free_minishell(mini));
 }

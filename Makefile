@@ -6,7 +6,7 @@
 #    By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 15:36:00 by mlakenya          #+#    #+#              #
-#    Updated: 2022/12/03 17:56:48 by mlakenya         ###   ########.fr        #
+#    Updated: 2023/02/05 16:29:02 by mlakenya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,17 @@ HEREDOC = heredoc_utils heredoc
 
 FREEERR = error free
 
-ENV     = copy_env env shlvl
+ENV		= copy_env env shlvl
 
 VARS	= variables variables2 del_variable_by_name
 
-COMMON	= signal token init loop_read
+COMMON	= signal token init loop_read signals_exec
 
 MAIN	= main 
 
-GNL     = get_next_line get_next_line_utils
+GNL		= get_next_line get_next_line_utils
 
-EXEC    = bin builtin exec redir fds
+EXEC	= bin builtin exec redir fds
 
 BUILTIN = cd echo env exit export pwd unset
 

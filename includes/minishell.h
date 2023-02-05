@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:05:45 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 17:18:39 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:18:36 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ t_mini		*init_mini(char **env);
 /*
  * loop_read
 */
-void		loop_read(t_mini *mini);
+void		loop_read(t_mini *mini, char *line);
 
 /*
  * free

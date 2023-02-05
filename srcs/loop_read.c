@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:53:37 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 18:41:24 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:18:15 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ void	free_tocken_add_history(t_mini *minishell)
 	minishell->cmd_line = NULL;
 }
 
-void	loop_read(t_mini *mini)
+void	loop_read(t_mini *mini, char *line)
 {
-	char	*line;
-
 	read_history_file(mini);
 	while (1)
 	{

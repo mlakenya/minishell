@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:06:36 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 16:47:06 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 13:22:09 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ t_mini	*init_mini(char **env)
 	mini->ret = 0;
 	mini->no_exec = 0;
 	mini->err_msg = NULL;
+	reset_fds(mini);
 	mini->stdin = dup(STDIN);
 	mini->stdout = dup(STDOUT);
-	reset_fds(mini);
 	return (mini);
 }

@@ -6,7 +6,7 @@
 /*   By: mlakenya <mlakenya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:50:35 by mlakenya          #+#    #+#             */
-/*   Updated: 2023/02/04 15:34:42 by mlakenya         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:26:19 by mlakenya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ char	*strjoin_env(char const *s1, char const *s2, int needQuotes)
 	if (s1 == NULL)
 		return (NULL);
 	if (s2 == NULL)
-	{
-		ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
-		str = ptr;
-		while (*s1 != '\0')
-			*ptr++ = *s1++;
-		*ptr = '\0';
-		return (str);
-	}
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2 + needQuotes * 2));
+		return (ft_strdup(s1));
+	ptr = (char *)malloc(sizeof(char)
+			* (ft_strlen(s1) + ft_strlen(s2) + 2 + needQuotes * 2));
 	str = ptr;
 	while (*s1 != '\0')
 		*ptr++ = *s1++;
